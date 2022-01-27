@@ -50,7 +50,7 @@ export const WrapperBody = styled.div`
   justify-content: center;
 `;
 export const ContentsLine = styled.div`
-  width: 100%;
+  width: 1100px;
   height: 80px;
 
   border-bottom: 1px solid gray;
@@ -63,25 +63,46 @@ export const ContentsLine = styled.div`
 `;
 export const ContentsLineTitle = styled.div`
   width: 500px;
-  margin: 15px 20px 15px 15px;
+
   cursor: pointer;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+
+  padding-left: 10px;
+  padding-right: 10px;
 `;
 export const ContentsLineWriter = styled.div`
   width: 100px;
-  margin: 15px 20px 15px 15px;
-`;
-export const ContentsLineLike = styled.div`
-  width: 100px;
-  margin: 15px 20px 15px 15px;
-`;
-export const ContentsLineTime = styled.div`
-  width: 100px;
-  margin: 15px 20px 15px 15px;
 
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  padding-left: 10px;
+  padding-right: 10px;
+`;
+export const ContentsLineLike = styled.div`
+  width: 100px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding-left: 10px;
+  padding-right: 10px;
+`;
+export const ContentsLineTime = styled.div`
+  width: 100px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding-left: 10px;
+  padding-right: 10px;
 `;
 
 //WapperFooter Part
@@ -133,5 +154,22 @@ export const ContentsPages = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  align-items: center;
+`;
+
+// Wrapper CSS for Pagination (boards)
+export const Boards__Wrapper = styled.div`
+  width: 1100px;
+  height: auto;
+
+  display: flex;
+  flex-direction: column;
+`;
+export const ContentsLineNo = styled.div`
+  padding: 15px 20px 15px 20px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
   align-items: center;
 `;

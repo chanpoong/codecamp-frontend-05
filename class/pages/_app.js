@@ -8,7 +8,7 @@ import { GlobalStyles } from "../src/commons/styles/globalStyles";
 
 function MyApp({ Component, pageProps }) {
   const client = new ApolloClient({
-    uri: "http://example.codebootcamp.co.kr/graphql",
+    uri: "http://backend05.codebootcamp.co.kr/graphql",
 
     //API 참조를 위한 주소는 uri에 작성
     cache: new InMemoryCache(),

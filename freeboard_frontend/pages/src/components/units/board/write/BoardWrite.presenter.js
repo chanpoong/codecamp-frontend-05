@@ -144,16 +144,32 @@ export default function BoardWriteUI(props) {
 
       <JH.Signup>
         <JH.SignupButton
-          onClick={props.ValueCheck}
+          onClick={props.showModal}
           //   {props.isEdit ? props.EditBoard() : props.ValueCheck()}
           changeBtnColor={props.isActive}
         >
           {props.isEdit ? "수정하기" : "등록하기"}
         </JH.SignupButton>
-        <JH.CansleButton onClick={props.ClickCansle}>
-          {" "}
-          취소하기{" "}
+        <Modal
+          title={props.isEdit ? "수정하기" : "등록하기"}
+          visible={props.isSignupModalVisible}
+          onOk={props.ValueCheck}
+          onCancel={props.handleCancel}
+        >
+          저장하시겠습니까?
+        </Modal>
+
+        <JH.CansleButton onClick={props.showCancelModal}>
+          취소하기
         </JH.CansleButton>
+        <Modal
+          title={"취소"}
+          visible={props.isCancelModalVisible}
+          onOk={props.ClickCansle}
+          onCancel={props.cancelModalPressCancel}
+        >
+          작성을 취소하시겠습니까?
+        </Modal>
       </JH.Signup>
     </JH.Board>
   );

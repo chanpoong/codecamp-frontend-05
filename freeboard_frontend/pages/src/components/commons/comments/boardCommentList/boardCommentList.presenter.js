@@ -3,6 +3,7 @@ import { BsPencil } from "react-icons/bs";
 import { MdDeleteOutline } from "react-icons/md";
 import { Rate } from "antd";
 import { getMyDate } from "../../../../commons/libraries/utils";
+import { Modal } from "antd";
 
 export default function BoardCommentListPageUI(props) {
   return (
@@ -70,8 +71,17 @@ export default function BoardCommentListPageUI(props) {
                     size="25"
                     type="button"
                     cursor="pointer"
-                    onClick={props.deleteComment}
+                    onClick={props.onToggleModal}
                   ></MdDeleteOutline>
+                  <Modal
+                    title={"삭제"}
+                    visible={props.isDeleteModalVisible}
+                    onOk={props.handleOk}
+                    onCancel={props.deleteCommentModalCancel}
+                  >
+                    댓글을 삭제하시겠습니까? <br /> 비밀번호: &nbsp;
+                    <input type="password" onChange={props.passwordForDelete} />
+                  </Modal>
                 </JH.ShowComment__Button>
               </JH.CommentHeader>
 

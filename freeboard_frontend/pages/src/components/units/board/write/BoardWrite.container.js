@@ -3,7 +3,7 @@ import { CREATE_BOARD, UPDATE_BOARD } from "./BoardWrite.queries";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { useMutation } from "@apollo/client";
-import DaumPostcode from "react-daum-postcode";
+import { Modal } from "antd";
 
 export default function MyPage(props) {
   const router = useRouter();
@@ -27,6 +27,8 @@ export default function MyPage(props) {
   const [updateBoard] = useMutation(UPDATE_BOARD);
 
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isSignupModalVisible, setIsSignupModalVisible] = useState(false);
+  const [isCancelModalVisible, setIsCancelModalVisible] = useState(false);
   const [address, setAddress] = useState("");
   const [zipcode, setZipCode] = useState("");
   //modal 활성 함수
@@ -39,7 +41,25 @@ export default function MyPage(props) {
     setZipCode(data.zonecode);
     onToggleModal();
   };
-
+  //modal press cancel
+  const handleCancel = () => {
+    setIsSignupModalVisible(false);
+  };
+  // modal onclickOpen
+  const showModal = () => {
+    setIsSignupModalVisible(true);
+  };
+  //modal press OK
+  const handleOk = () => {
+    setIsSignupModalVisible(false);
+  };
+  //modal press cancel
+  const showCancelModal = () => {
+    setIsCancelModalVisible(true);
+  };
+  const cancelModalPressCancel = () => {
+    setIsCancelModalVisible((prev) => !prev);
+  };
   // 게시물 생성 함수
   const submitBoard = async () => {
     const result = await createBoard({
@@ -76,18 +96,20 @@ export default function MyPage(props) {
 
       await updateBoard({
         variables: {
-          boardId: String(router.query.aaa),
+          boardId: String(router.query.detail),
           password: password,
           updateBoardInput: myVariables,
         },
       });
 
-      console.log(myVariables);
+      Modal.success({
+        content: `게시물 ${props.isEdit ? "수정" : "등록"}이 완료되었습니다`,
+      });
     } catch (error) {
-      alert(error.message);
+      Modal.error({ content: error.message });
     }
 
-    router.push(`/boards/${router.query.aaa}`);
+    router.push(`/boards/${router.query.detail}`);
   };
 
   //빈칸체크 후 공백이아니라면 에러메세지 삭제
@@ -170,37 +192,33 @@ export default function MyPage(props) {
   function ValueCheck(event) {
     if (name === "" && !props.isEdit) {
       setNameError("작성자를 입력해주세요.");
+      Modal.error({ content: `내용을 입력해주세요` });
+      setIsSignupModalVisible(false);
     } else if (password === "" && !props.isEdit) {
       setPasswordError("비밀번호를 입력해주세요");
+      Modal.error({ content: `내용을 입력해주세요` });
+      setIsSignupModalVisible(false);
     } else if (title === "" && !props.isEdit) {
       setTitleError("제목을 입력해주세요");
+      Modal.error({ content: `내용을 입력해주세요` });
+      setIsSignupModalVisible(false);
     } else if (txt === "" && !props.isEdit) {
       setTxtError("내용을 입력해주세요");
+      Modal.error({ content: `내용을 입력해주세요` });
+      setIsSignupModalVisible(false);
     } else {
-      if (confirm("저장하시겠습니까?") === true) {
-        `${props.isEdit ? EditBoard() : submitBoard()}`;
-        alert(`게시물 ${props.isEdit ? "수정" : "등록"}이 완료되었습니다`);
-      } else {
-        return false;
-      }
+      `${props.isEdit ? EditBoard() : submitBoard()}`;
     }
   }
+
   function ClickCansle(event) {
-    if (
-      confirm("작성을 취소하시겠습니까? \n작성중이던 내용은 삭제됩니다") ===
-      true
-    ) {
-      `${
-        props.isEdit
-          ? router.push(`/boards/${router.query.aaa}`)
-          : router.push(`/boards/`)
-      }`;
-    } else {
-      return false;
-    }
+    `${
+      props.isEdit
+        ? router.push(`/boards/${router.query.detail}`)
+        : router.push(`/boards/`)
+    }`;
   }
-  console.log(zipcode);
-  console.log(props.data?.fetchBoard.boardAddress?.zipcode);
+
   return (
     <BoardWriteUI
       name={name}
@@ -227,6 +245,13 @@ export default function MyPage(props) {
       onToggleModal={onToggleModal}
       address={address}
       zipcode={zipcode}
+      isSignupModalVisible={isSignupModalVisible}
+      showModal={showModal}
+      handleOk={handleOk}
+      handleCancel={handleCancel}
+      showCancelModal={showCancelModal}
+      isCancelModalVisible={isCancelModalVisible}
+      cancelModalPressCancel={cancelModalPressCancel}
     />
   );
 }

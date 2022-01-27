@@ -192,7 +192,7 @@ export const GetUserAddress = styled.input`
   height: 52px;
 
   margin-top: 15px;
-  margin-bottom: 15px;
+  margin-bottom: 5px;
 
   border: 1px solid #bdbdbd;
   box-sizing: border-box;
@@ -229,7 +229,7 @@ export const InputMailAddress = styled.input`
   box-sizing: border-box;
 
   margin-right: 10px;
-  padding-left: 15px;
+  padding-left: 5px;
   font-size: 16px;
 `;
 

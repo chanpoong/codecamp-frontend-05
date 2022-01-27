@@ -1,7 +1,7 @@
 import BoardCommentsPage from "../../../commons/comments";
 import * as JH from "./boardDetail.styles";
 import ReactPlayer from "react-player";
-import DaumPostcode from "react-daum-postcode";
+import { Modal, Button } from "antd";
 
 export default function BoardDetailUI(props) {
   return (
@@ -64,7 +64,15 @@ export default function BoardDetailUI(props) {
             <JH.RewriteBtn onClick={props.onClickUpdateBoard}>
               수정하기
             </JH.RewriteBtn>
-            <JH.DeleteBtn onClick={props.onClickDelete}>삭제하기</JH.DeleteBtn>
+            <JH.DeleteBtn onClick={props.onToggleModal}>삭제하기</JH.DeleteBtn>
+            <Modal
+              title={"삭제"}
+              visible={props.isCancelModalVisible}
+              onOk={props.handleOk}
+              onCancel={props.cancelModalPressCancel}
+            >
+              게시글을 삭제하시겠습니까?
+            </Modal>
           </div>
         </JH.WrapperBody__menu>
       </JH.WrapperBody>
