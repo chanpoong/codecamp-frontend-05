@@ -22,17 +22,6 @@ export default function ContentsBoardUI(props) {
           <JH.ContentsLineTime>작성일</JH.ContentsLineTime>
         </JH.ContentsLine>
         <Boards data={props.data} onClickToBoard={props.onClickToBoard} />
-        {/* {props.data?.fetchBoards?.map((el, index) => (
-          <JH.ContentsLine>
-            <span>{`${index + 1}`} </span>
-            <JH.ContentsLineWriter>{el.writer}</JH.ContentsLineWriter>
-            <JH.ContentsLineTitle id={el._id} onClick={props.onClickToBoard}>
-              {el.title}
-            </JH.ContentsLineTitle>
-            <JH.ContentsLineLike>{el.likeCount}</JH.ContentsLineLike>
-            <JH.ContentsLineTime>{getMyDate(el.createdAt)}</JH.ContentsLineTime>
-          </JH.ContentsLine>
-        ))} */}
       </JH.WrapperBody>
       <JH.WrapperFooter>
         <JH.ContentsBtnLine>

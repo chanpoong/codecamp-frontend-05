@@ -15,7 +15,7 @@ export default function BoardDetailPage() {
   const { data } = useQuery(FETCH_BOARD, {
     variables: { boardId: String(router.query.detail) },
   });
-  console.log(data);
+
   const [deleteBoard] = useMutation(DELETE_BOARD);
   const [likeBoard] = useMutation(LIKE_BOARD);
   const [dislikeBoard] = useMutation(DISLIKE_BOARD);

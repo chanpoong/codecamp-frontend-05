@@ -31,16 +31,23 @@ export default function MyPage(props) {
   const [isCancelModalVisible, setIsCancelModalVisible] = useState(false);
   const [address, setAddress] = useState("");
   const [zipcode, setZipCode] = useState("");
+  const [addressDetail, setAddressDetail] = useState("");
   //modal 활성 함수
   const onToggleModal = () => {
     setIsModalVisible((prev) => !prev);
   };
+
   // 우편번호 검색 함수
   const onCompleteDaumPostCode = (data) => {
     setAddress(data.address);
     setZipCode(data.zonecode);
     onToggleModal();
   };
+  // 상세주소 받기
+  const onInputAddressDetail = (event) => {
+    setAddressDetail(event.target.value);
+  };
+
   //modal press cancel
   const handleCancel = () => {
     setIsSignupModalVisible(false);
@@ -72,6 +79,7 @@ export default function MyPage(props) {
         boardAddress: {
           zipcode,
           address,
+          addressDetail,
         },
       },
     });
@@ -87,10 +95,12 @@ export default function MyPage(props) {
       if (title) myVariables.title = title;
       if (txt) myVariables.contents = txt;
       if (name) myVariables.writer = name;
-      if (zipcode || address) {
+      if (zipcode || address || addressDetail) {
         myVariables.boardAddress = {};
         if (zipcode) myVariables.boardAddress.zipcode = zipcode;
         if (address) myVariables.boardAddress.address = address;
+        if (addressDetail)
+          myVariables.boardAddress.addressDetail = addressDetail;
         // if(zipcode) myVariables.boardAddress.zipcode=zipcode
       }
 
@@ -245,6 +255,7 @@ export default function MyPage(props) {
       onToggleModal={onToggleModal}
       address={address}
       zipcode={zipcode}
+      addressDetail={addressDetail}
       isSignupModalVisible={isSignupModalVisible}
       showModal={showModal}
       handleOk={handleOk}
@@ -252,6 +263,7 @@ export default function MyPage(props) {
       showCancelModal={showCancelModal}
       isCancelModalVisible={isCancelModalVisible}
       cancelModalPressCancel={cancelModalPressCancel}
+      onInputAddressDetail={onInputAddressDetail}
     />
   );
 }

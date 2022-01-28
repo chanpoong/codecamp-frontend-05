@@ -24,7 +24,6 @@ const HIDDEN_HEADERS = ["/12-06-modal-address-refactoring"];
 // }
 export default function Layout(props) {
   const router = useRouter();
-  console.log(router);
 
   const isHiddenHeader = HIDDEN_HEADERS.includes(router.asPath);
   return (

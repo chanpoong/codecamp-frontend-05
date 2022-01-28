@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styled from "@emotion/styled";
+import { AiOutlineArrowRight, AiOutlineArrowLeft } from "react-icons/ai";
 
 const Pagination__Wrapper = styled.div`
   display: flex;
@@ -10,11 +11,11 @@ const Pagination__Wrapper = styled.div`
   height: 80px;
 `;
 
-const NextPage = styled.span`
+const NextPage = styled(AiOutlineArrowRight)`
   padding-right: 20px;
   padding-left: 10px;
 
-  font-size: 1rem;
+  font-size: 1.3rem;
   border-left: 1px silver solid;
 
   width: 150px;
@@ -26,14 +27,16 @@ const NextPage = styled.span`
 
   :hover {
     background-color: gold;
+    font-weight: bold;
+    color: white;
     border-radius: 8px 20px 20px 8px;
     font-weight: bold;
   }
 `;
-const PrevPage = styled.span`
+const PrevPage = styled(AiOutlineArrowLeft)`
   padding-left: 20px;
   padding-right: 10px;
-  font-size: 1rem;
+  font-size: 1.3rem;
   border-right: 1px silver solid;
 
   width: 150px;
@@ -44,6 +47,8 @@ const PrevPage = styled.span`
   cursor: pointer;
   :hover {
     background-color: gold;
+    font-weight: bold;
+    color: white;
     border-radius: 20px 8px 8px 20px;
   }
 `;
@@ -64,6 +69,13 @@ const PageIndex = styled.span`
 
   padding-left: 5px;
   padding-right: 5px;
+
+  :hover {
+    background-color: gold;
+    border-radius: 3px;
+    font-weight: bold;
+    color: white;
+  }
 `;
 
 export default function Pagination(props) {
@@ -109,7 +121,7 @@ export default function Pagination(props) {
           )
       )}
 
-      <NextPage onClick={onClickNextPage}> 다음페이지 </NextPage>
+      <NextPage onClick={onClickNextPage}> </NextPage>
     </Pagination__Wrapper>
   );
 }

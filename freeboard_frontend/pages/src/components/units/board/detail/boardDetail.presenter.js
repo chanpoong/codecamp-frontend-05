@@ -36,6 +36,9 @@ export default function BoardDetailUI(props) {
             {props.data?.fetchBoard.boardAddress.zipcode} <br />
             주소:
             {props.data?.fetchBoard.boardAddress.address}
+            <br />
+            상세주소:
+            {props.data?.fetchBoard.boardAddress.addressDetail}
           </div>
 
           <JH.ContentsBody>

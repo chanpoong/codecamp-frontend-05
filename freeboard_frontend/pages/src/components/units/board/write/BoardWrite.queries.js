@@ -30,6 +30,7 @@ export const CREATE_BOARD = gql`
       boardAddress {
         zipcode
         address
+        addressDetail
       }
     }
   }
@@ -54,6 +55,7 @@ export const UPDATE_BOARD = gql`
       boardAddress {
         zipcode
         address
+        addressDetail
       }
     }
   }

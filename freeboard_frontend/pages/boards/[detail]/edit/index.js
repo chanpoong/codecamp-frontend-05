@@ -16,6 +16,7 @@ const FETCH_BOARD = gql`
         _id
         address
         zipcode
+        addressDetail
       }
     }
   }

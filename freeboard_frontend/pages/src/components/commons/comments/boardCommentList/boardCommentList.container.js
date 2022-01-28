@@ -18,8 +18,8 @@ export default function BoardCommentListPage() {
   const [commentContents, setCommentContents] = useState("");
   const [commentId, setCommentId] = useState("");
 
-  const { data } = useQuery(FETCH_BOARD_COMMENT, {
-    variables: { boardId: String(router.query.detail) },
+  const { data, fetchMore } = useQuery(FETCH_BOARD_COMMENT, {
+    variables: { boardId: String(router.query.detail), page: 1 },
   });
 
   const [createBoardComment] = useMutation(CREATE_BOARD_COMMENT);
@@ -121,6 +121,7 @@ export default function BoardCommentListPage() {
       handleOk={handleOk}
       isDeleteModalVisible={isDeleteModalVisible}
       passwordForDelete={passwordForDelete}
+      fetchMore={fetchMore}
     />
   );
 }

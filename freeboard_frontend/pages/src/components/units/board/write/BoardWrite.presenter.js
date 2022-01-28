@@ -87,7 +87,16 @@ export default function BoardWriteUI(props) {
           }
         />
 
-        <JH.InputAddress type="text" placeholder="상세주소를 입력해주세요" />
+        <JH.InputAddress
+          type="text"
+          placeholder="상세주소를 입력해주세요"
+          onChange={props.onInputAddressDetail}
+          value={
+            props.addressDetail
+              ? props.addressDetail
+              : props.data?.fetchBoard.boardAddress?.addressDetail
+          }
+        />
       </JH.TextBox2>
 
       <JH.TextBox2>

@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { BsSearch } from "react-icons/bs";
 
 export const Wrapper = styled.div`
   width: 1200px;
@@ -34,12 +35,29 @@ export const HeaderTitle = styled.div`
 
 export const HeaderSearch = styled.div`
   width: 100%;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
 `;
 
 export const SearchBar = styled.input`
   width: 100%;
+
+  border-top: none;
+  border-left: none;
+  border-right: none;
+
+  font-size: 1rem;
 `;
-export const SearchBtn = styled.button``;
+export const SearchBtn = styled(BsSearch)`
+  width: 25px;
+  height: 25px;
+  margin-left: 10px;
+
+  cursor: pointer;
+`;
 
 //WrapperBody Part
 export const WrapperBody = styled.div`
@@ -134,6 +152,12 @@ export const MakeContentsBtn = styled.button`
   color: black;
   font-weight: bold;
   cursor: pointer;
+  :hover {
+    background-color: gold;
+    color: white;
+    font-weight: bold;
+    border: none;
+  }
 `;
 
 export const ContentsPagesLine = styled.div`

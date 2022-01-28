@@ -1,9 +1,7 @@
 import * as JH from "./boardCommentList.styles";
-import { BsPencil } from "react-icons/bs";
-import { MdDeleteOutline } from "react-icons/md";
 import { Rate } from "antd";
-import { getMyDate } from "../../../../commons/libraries/utils";
-import { Modal } from "antd";
+
+import CommentListPage from "../../../../commons/pagination/commentList/commentslist";
 
 export default function BoardCommentListPageUI(props) {
   return (
@@ -45,55 +43,17 @@ export default function BoardCommentListPageUI(props) {
           </JH.MakeCommentTxtBox>
         </JH.FooterMakeComment>
 
-        <JH.FooterShowComment>
-          {props.data?.fetchBoardComments.map((el, index) => (
-            <div key={el._id}>
-              <JH.CommentHeader>
-                <JH.ShowComment__header>
-                  <JH.ShowComment__headerIcon>icon</JH.ShowComment__headerIcon>
-                  <JH.ShowComment__headerWriter>
-                    {el.writer}
-                  </JH.ShowComment__headerWriter>
-                  {/* <JH.ShowComment__headerRating>{el.rating}</JH.ShowComment__headerRating> */}
-                  <Rate allowHalf value={el.rating} disabled="true" />
-                </JH.ShowComment__header>
-
-                <JH.ShowComment__Button>
-                  <BsPencil
-                    className="UpdateIcon"
-                    size="20"
-                    type="button"
-                    cursor="pointer"
-                  ></BsPencil>
-                  <MdDeleteOutline
-                    id={el._id}
-                    className="DeleteIcon"
-                    size="25"
-                    type="button"
-                    cursor="pointer"
-                    onClick={props.onToggleModal}
-                  ></MdDeleteOutline>
-                  <Modal
-                    title={"삭제"}
-                    visible={props.isDeleteModalVisible}
-                    onOk={props.handleOk}
-                    onCancel={props.deleteCommentModalCancel}
-                  >
-                    댓글을 삭제하시겠습니까? <br /> 비밀번호: &nbsp;
-                    <input type="password" onChange={props.passwordForDelete} />
-                  </Modal>
-                </JH.ShowComment__Button>
-              </JH.CommentHeader>
-
-              <JH.CommentBody>
-                <JH.CommentContent>{el.contents}</JH.CommentContent>
-                <JH.CommentCreatedAt>
-                  {getMyDate(el.createdAt)}
-                </JH.CommentCreatedAt>
-              </JH.CommentBody>
-            </div>
-          ))}
-        </JH.FooterShowComment>
+        <JH.CommentCutLine>
+          <CommentListPage
+            data={props.data}
+            fetchMore={props.fetchMore}
+            passwordForDelete={props.passwordForDelete}
+            onToggleModal={props.onToggleModal}
+            isDeleteModalVisible={props.isDeleteModalVisible}
+            handleOk={props.handleOk}
+            deleteCommentModalCancel={props.deleteCommentModalCancel}
+          />
+        </JH.CommentCutLine>
       </JH.WrapperFooter>
     </>
   );

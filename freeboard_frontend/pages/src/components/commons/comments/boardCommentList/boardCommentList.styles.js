@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { FaUser } from "react-icons/fa";
 
 export const WrapperFooter = styled.div`
   width: 100%;
@@ -88,10 +89,11 @@ export const SubmitCommentBtn = styled.button`
   border-top: 1px solid grey;
 `;
 export const FooterShowComment = styled.div`
-  width: 1200px;
+  /* width: 1100px; */
+  width: 100%;
   height: 100%;
   background-color: white;
-
+  padding: 15px 25px 15px 25px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -99,24 +101,27 @@ export const FooterShowComment = styled.div`
 
   text-align: 40px;
   border-bottom: 1px grey solid;
+
+  border-radius: 10px;
 `;
 export const CommentHeader = styled.div`
-  width: 1200px;
+  /* width: 1200px; */
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 `;
 export const ShowComment__header = styled.div`
-  width: 1200px;
-
+  /* width: 1200px; */
+  /* width: 100%; */
   padding-top: 10px;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
 `;
-export const ShowComment__headerIcon = styled.div`
+export const ShowComment__headerIcon = styled(FaUser)`
   width: 50px;
   display: flex;
 `;
@@ -143,7 +148,8 @@ export const ShowComment__Button = styled.div`
   align-items: center;
 `;
 export const CommentBody = styled.div`
-  width: 1200px;
+  /* width: 1100px; */
+  width: 100%;
   height: auto;
   display: flex;
   flex-direction: column;
@@ -153,8 +159,8 @@ export const CommentBody = styled.div`
   border-bottom: 1px solid grey;
 `;
 export const CommentContent = styled.div`
-  width: 1200px;
-  height: 100px;
+  /* width: 1100px; */
+  height: auto;
 
   padding-top: 10px;
 `;
@@ -165,4 +171,8 @@ export const CommentCreatedAt = styled.div`
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
+`;
+
+export const CommentCutLine = styled.div`
+  height: 300px;
 `;
