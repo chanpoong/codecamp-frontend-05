@@ -8,13 +8,13 @@ import styled from "@emotion/styled";
 import InfiniteScroll from "react-infinite-scroller";
 
 const CommentsListWrapper = styled.div`
-  width: 1200px;
-  max-height: 350px;
+  width: 100%;
+  /* height: 350px; */
 
-  display: flex;
+  /* display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: center; */
 
   background-color: silver;
 `;
@@ -23,19 +23,18 @@ const CommentScroller = styled(InfiniteScroll)`
   /* width: 1200px; */
   width: 100%;
   padding: 15px;
-  max-height: 350px;
 
   overflow: auto;
 
-  display: flex;
+  /* display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: center; */
 `;
 
 export default function CommentListPage(props) {
   const onLoadMore = () => {
-    if (!props.data) return; // 불러올 데이터가 없으면 실행하지 않게
+    if (!props?.data) return; // 불러올 데이터가 없으면 실행하지 않게
 
     props.fetchMore({
       variables: {

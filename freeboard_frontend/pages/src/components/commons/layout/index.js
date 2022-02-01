@@ -9,7 +9,7 @@ import LayoutSidebar from "./sidebar";
 
 const LayoutBody = styled.div`
   width: 100%;
-  height: 100%;
+  height: auto;
 `;
 
 const BodyWrapper = styled.div`
@@ -35,7 +35,7 @@ export default function Layout(props) {
         <LayoutSidebar />
         <LayoutBody>{props.children}</LayoutBody>
       </BodyWrapper>
-      <LayoutFooter />
+      {/* <LayoutFooter /> */}
     </div>
   );
 }

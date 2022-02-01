@@ -83,7 +83,7 @@ export const WrapperHeader__pannel = styled.div`
   justify-content: center;
   align-items: center;
 `;
-export const WrapperHeader__bottom = styled.div`
+/* export const WrapperHeader__bottom = styled.div`
   width: 100%;
   height: 64px;
 
@@ -100,10 +100,10 @@ export const WrapperHeader__bottom = styled.div`
 
   background-color: yellow;
 `;
-
+ */
 // WrapperBody part
 export const WrapperBody = styled.div`
-  width: 1200px;
+  width: 100%;
 `;
 
 export const WrapperBody__contents = styled.div`
@@ -159,7 +159,7 @@ export const ContentsWriter = styled.div`
 `;
 export const ContentsText = styled.div`
   width: 100%;
-  height: 700px;
+  /* height: 700px; */
 
   font-family: Noto Sans CJK KR;
   font-style: normal;

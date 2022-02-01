@@ -5,7 +5,7 @@ export const WrapperFooter = styled.div`
   width: 100%;
 
   padding-top: 20px;
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
 
   display: flex;
   flex-direction: column;
@@ -18,7 +18,7 @@ export const WrapperFooter__Header = styled.div`
 `;
 
 export const FooterMakeComment = styled.div`
-  width: 1200px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -174,5 +174,5 @@ export const CommentCreatedAt = styled.div`
 `;
 
 export const CommentCutLine = styled.div`
-  height: 300px;
+  width: 100%;
 `;
