@@ -35,7 +35,7 @@ export default function Layout(props) {
         <LayoutSidebar />
         <LayoutBody>{props.children}</LayoutBody>
       </BodyWrapper>
-      {/* <LayoutFooter /> */}
+      <LayoutFooter />
     </div>
   );
 }

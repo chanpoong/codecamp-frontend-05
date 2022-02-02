@@ -2,6 +2,7 @@ import {
   CREATE_BOARD_COMMENT,
   FETCH_BOARD_COMMENT,
   DELETE_BOARD_COMMENT,
+  UPDATE_BOARD_COMMENT,
 } from "./boardCommentList.queries";
 import { useMutation, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
@@ -24,6 +25,7 @@ export default function BoardCommentListPage() {
 
   const [createBoardComment] = useMutation(CREATE_BOARD_COMMENT);
   const [deleteBoardComment] = useMutation(DELETE_BOARD_COMMENT);
+  const [updateBoardComment] = useMutation(UPDATE_BOARD_COMMENT);
 
   function onChangeCommentWriter(event) {
     setCommentWriter(event.target.value);
@@ -102,6 +104,36 @@ export default function BoardCommentListPage() {
       alert(error.message);
     }
   };
+  // 댓글 수정 함수
+  const editComment = async () => {
+    try {
+      const commentVariables = {};
+
+      if (commentContents) commentVariables.contents = commentContents;
+      if (commentRating) commentVariables.rating = commentRating;
+
+      await updateBoardComment({
+        variables: {
+          boardCommentId: commentId,
+          password: commentPassword,
+          updateBoardCommentInput: commentVariables,
+        },
+
+        refetchQueries: [
+          {
+            query: FETCH_BOARD_COMMENT,
+            variables: {
+              boardId: String(router.query.detail),
+              password: commentPassword,
+              updateBoardCommentInput: commentVariables,
+            },
+          },
+        ],
+      });
+    } catch (error) {
+      alert(error.message);
+    }
+  };
 
   return (
     <BoardCommentListPageUI
@@ -122,6 +154,7 @@ export default function BoardCommentListPage() {
       isDeleteModalVisible={isDeleteModalVisible}
       passwordForDelete={passwordForDelete}
       fetchMore={fetchMore}
+      editComment={editComment}
     />
   );
 }

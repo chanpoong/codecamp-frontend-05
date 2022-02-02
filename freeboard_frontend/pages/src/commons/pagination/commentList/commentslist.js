@@ -9,27 +9,14 @@ import InfiniteScroll from "react-infinite-scroller";
 
 const CommentsListWrapper = styled.div`
   width: 100%;
-  /* height: 350px; */
-
-  /* display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center; */
-
-  background-color: silver;
+  background-color: white;
 `;
 
 const CommentScroller = styled(InfiniteScroll)`
-  /* width: 1200px; */
   width: 100%;
   padding: 15px;
-
+  height: 350px;
   overflow: auto;
-
-  /* display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center; */
 `;
 
 export default function CommentListPage(props) {
@@ -82,6 +69,7 @@ export default function CommentListPage(props) {
                   size="20"
                   type="button"
                   cursor="pointer"
+                  onClick={props.editComment}
                 ></BsPencil>
                 <MdDeleteOutline
                   id={el._id}

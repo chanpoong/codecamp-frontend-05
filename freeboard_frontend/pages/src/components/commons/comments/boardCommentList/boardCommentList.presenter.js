@@ -52,6 +52,7 @@ export default function BoardCommentListPageUI(props) {
             isDeleteModalVisible={props.isDeleteModalVisible}
             handleOk={props.handleOk}
             deleteCommentModalCancel={props.deleteCommentModalCancel}
+            editComment={props.editComment}
           />
         </JH.CommentCutLine>
       </JH.WrapperFooter>

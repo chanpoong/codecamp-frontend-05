@@ -101,7 +101,6 @@ export default function MyPage(props) {
         if (address) myVariables.boardAddress.address = address;
         if (addressDetail)
           myVariables.boardAddress.addressDetail = addressDetail;
-        // if(zipcode) myVariables.boardAddress.zipcode=zipcode
       }
 
       await updateBoard({
