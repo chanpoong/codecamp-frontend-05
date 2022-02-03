@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { FaUser } from "react-icons/fa";
+import InfiniteScroll from "react-infinite-scroller";
 
 export const WrapperFooter = styled.div`
   width: 100%;
@@ -175,4 +176,13 @@ export const CommentCreatedAt = styled.div`
 
 export const CommentCutLine = styled.div`
   width: 100%;
+  height: 350px;
+  overflow: auto;
+`;
+
+export const CommentScroller = styled(InfiniteScroll)`
+  width: 100%;
+  padding: 15px;
+  /* height: 350px; */
+  /* overflow: auto; */
 `;

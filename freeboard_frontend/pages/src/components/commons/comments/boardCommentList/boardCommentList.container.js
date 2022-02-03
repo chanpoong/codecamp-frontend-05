@@ -8,7 +8,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 import BoardCommentListPageUI from "./boardCommentList.presenter";
 import React, { useState } from "react";
-import Modal from "antd/lib/modal/Modal";
+import { Modal } from "antd";
 
 export default function BoardCommentListPage() {
   const router = useRouter();
@@ -40,7 +40,7 @@ export default function BoardCommentListPage() {
     setCommentRating(value);
   }
 
-  //modal
+  //modal for delete
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
   const [commentPasswordForDelete, setCommentPasswordForDelete] = useState("");
   const onToggleModal = (event) => {
@@ -59,6 +59,23 @@ export default function BoardCommentListPage() {
   const passwordForDelete = (event) => {
     setCommentPasswordForDelete(event.target.value);
   };
+
+  //modal for update
+  const [isUpdateModalVisible, setIsUpdateModalVisible] = useState(false);
+  const [commentPasswordForUpdate, setCommentPasswordForUpdate] = useState("");
+
+  //modal press cancel
+  const updateCommentModalCancel = () => {
+    setIsUpdateModalVisible((prev) => !prev);
+  };
+  //modal press OK
+  const updateHandleOk = () => {
+    setIsUpdateModalVisible((prev) => !prev);
+    editComment();
+  };
+  const passwordForUpdate = (event) => {
+    setCommentPasswordForUpdate(event.target.value);
+  };
   //댓글 작성 함수
   const submitComment = async () => {
     try {
@@ -76,7 +93,7 @@ export default function BoardCommentListPage() {
         refetchQueries: [
           {
             query: FETCH_BOARD_COMMENT,
-            variables: { boardId: String(router.query.detail) },
+            variables: { boardId: String(router.query.detail), page: 1 },
           },
         ],
       });
@@ -96,7 +113,7 @@ export default function BoardCommentListPage() {
         refetchQueries: [
           {
             query: FETCH_BOARD_COMMENT,
-            variables: { boardId: String(router.query.detail) },
+            variables: { boardId: String(router.query.detail), page: 1 },
           },
         ],
       });
@@ -104,8 +121,9 @@ export default function BoardCommentListPage() {
       alert(error.message);
     }
   };
+
   // 댓글 수정 함수
-  const editComment = async () => {
+  const editComment = async (event) => {
     try {
       const commentVariables = {};
 
@@ -115,7 +133,7 @@ export default function BoardCommentListPage() {
       await updateBoardComment({
         variables: {
           boardCommentId: commentId,
-          password: commentPassword,
+          password: commentPasswordForUpdate,
           updateBoardCommentInput: commentVariables,
         },
 
@@ -124,15 +142,40 @@ export default function BoardCommentListPage() {
             query: FETCH_BOARD_COMMENT,
             variables: {
               boardId: String(router.query.detail),
-              password: commentPassword,
-              updateBoardCommentInput: commentVariables,
+              page: 1,
             },
           },
         ],
       });
+      Modal.success({ content: "댓글 수정이 완료되었습니다." });
+
+      // setCommentPassword("");
     } catch (error) {
-      alert(error.message);
+      Modal.error({ content: error.message });
     }
+  };
+
+  //인피니티 스크롤 댓글 불러오기 함수
+  const onLoadMore = () => {
+    if (!data) return; // 불러올 데이터가 없으면 실행하지 않게
+
+    fetchMore({
+      variables: {
+        page: Math.ceil(data?.fetchBoardComments.length / 10) + 1,
+      },
+      // Math.ceil(data.fetchBoards.length / 10)가 현재 페이지를 나타냄
+      updateQuery: (prev, { fetchMoreResult }) => {
+        if (!fetchMoreResult.fetchBoardComments)
+          return { fetchBoardComments: [...prev.fetchBoardComments] };
+        // 더 불러올 데이터가 없으면 이전 데이터만 보여주기
+        return {
+          fetchBoardComments: [
+            ...prev.fetchBoardComments,
+            ...fetchMoreResult.fetchBoardComments,
+          ],
+        }; // 이전 글, 다음글 합쳐서 리턴
+      },
+    });
   };
 
   return (
@@ -154,7 +197,14 @@ export default function BoardCommentListPage() {
       isDeleteModalVisible={isDeleteModalVisible}
       passwordForDelete={passwordForDelete}
       fetchMore={fetchMore}
+      onLoadMore={onLoadMore}
+      isUpdateModalVisible={isUpdateModalVisible}
+      setIsUpdateModalVisible={setIsUpdateModalVisible}
+      updateCommentModalCancel={updateCommentModalCancel}
+      updateHandleOk={updateHandleOk}
+      passwordForUpdate={passwordForUpdate}
       editComment={editComment}
+      setCommentId={setCommentId}
     />
   );
 }

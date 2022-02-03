@@ -44,16 +44,35 @@ export default function BoardCommentListPageUI(props) {
         </JH.FooterMakeComment>
 
         <JH.CommentCutLine>
-          <CommentListPage
-            data={props.data}
-            fetchMore={props.fetchMore}
-            passwordForDelete={props.passwordForDelete}
-            onToggleModal={props.onToggleModal}
-            isDeleteModalVisible={props.isDeleteModalVisible}
-            handleOk={props.handleOk}
-            deleteCommentModalCancel={props.deleteCommentModalCancel}
-            editComment={props.editComment}
-          />
+          <JH.CommentScroller
+            pageStart={0}
+            loadMore={props.onLoadMore}
+            hasMore={false || true}
+            useWindow={false}
+          >
+            {props.data?.fetchBoardComments?.map((el) => (
+              <JH.FooterShowComment key={el._id}>
+                <CommentListPage
+                  el={el}
+                  data={props.data}
+                  passwordForDelete={props.passwordForDelete}
+                  onToggleModal={props.onToggleModal}
+                  isDeleteModalVisible={props.isDeleteModalVisible}
+                  handleOk={props.handleOk}
+                  deleteCommentModalCancel={props.deleteCommentModalCancel}
+                  updateCommentModalCancel={props.updateCommentModalCancel}
+                  updateHandleOk={props.updateHandleOk}
+                  passwordForUpdate={props.passwordForUpdate}
+                  isUpdateModalVisible={props.isUpdateModalVisible}
+                  editComment={props.editComment}
+                  setIsUpdateModalVisible={props.setIsUpdateModalVisible}
+                  setCommentId={props.setCommentId}
+                  onChangeCommentRating={props.onChangeCommentRating}
+                  onChangeCommentContents={props.onChangeCommentContents}
+                />
+              </JH.FooterShowComment>
+            ))}
+          </JH.CommentScroller>
         </JH.CommentCutLine>
       </JH.WrapperFooter>
     </>

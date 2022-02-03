@@ -17,22 +17,24 @@ const BodyWrapper = styled.div`
 `;
 
 // 헤더를 숨기고 싶은 페이지를 설정하기
-const HIDDEN_HEADERS = ["/12-06-modal-address-refactoring"];
+const HIDDEN_SIDEBAR = ["/"];
 
 // interface IProps {
 //   children: ReactChild;
 // }
 export default function Layout(props) {
   const router = useRouter();
+  console.log(router);
 
-  const isHiddenHeader = HIDDEN_HEADERS.includes(router.asPath);
+  const isHiddenSidebar = HIDDEN_SIDEBAR.includes(router.asPath);
   return (
     <div>
       <LayoutHeader />
-      <LayoutBanner />
-      <LayoutNavigation />
+      {!isHiddenSidebar && <LayoutBanner />}
+      {!isHiddenSidebar && <LayoutNavigation />}
       <BodyWrapper>
-        <LayoutSidebar />
+        {!isHiddenSidebar && <LayoutSidebar />}
+
         <LayoutBody>{props.children}</LayoutBody>
       </BodyWrapper>
       <LayoutFooter />

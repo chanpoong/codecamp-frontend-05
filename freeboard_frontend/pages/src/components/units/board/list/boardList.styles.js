@@ -81,7 +81,7 @@ export const ContentsLine = styled.div`
 `;
 export const ContentsLineTitle = styled.div`
   width: 500px;
-
+  overflow: hidden;
   cursor: pointer;
 
   display: flex;
@@ -94,6 +94,7 @@ export const ContentsLineTitle = styled.div`
 `;
 export const ContentsLineWriter = styled.div`
   width: 100px;
+  overflow: hidden;
 
   display: flex;
   flex-direction: row;
