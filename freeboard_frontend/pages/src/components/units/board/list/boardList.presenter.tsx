@@ -9,7 +9,7 @@ export default function ContentsBoardUI(props) {
       <JH.WrapperHeader>
         <JH.HeaderTitle>자유게시판</JH.HeaderTitle>
         <JH.HeaderSearch>
-          <JH.SearchBar placeholder="Search" />
+          <JH.SearchBar placeholder="Search" onChange={props.onChangeSearch} />
           <JH.SearchBtn />
         </JH.HeaderSearch>
       </JH.WrapperHeader>
@@ -21,7 +21,11 @@ export default function ContentsBoardUI(props) {
           <JH.ContentsLineLike>추천수</JH.ContentsLineLike>
           <JH.ContentsLineTime>작성일</JH.ContentsLineTime>
         </JH.ContentsLine>
-        <Boards data={props.data} onClickToBoard={props.onClickToBoard} />
+        <Boards
+          data={props.data}
+          onClickToBoard={props.onClickToBoard}
+          keyword={props.keyword}
+        />
       </JH.WrapperBody>
       <JH.WrapperFooter>
         <JH.ContentsBtnLine>
@@ -34,6 +38,7 @@ export default function ContentsBoardUI(props) {
             <Pagination
               data={props.data}
               refetch={props.refetch}
+              keyword={props.keyword}
               lastPage={props.lastPage}
               startPage={props.startPage}
               setStartPage={props.setStartPage}

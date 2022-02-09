@@ -1,6 +1,8 @@
 import * as JH from "./BoardWrite.styles";
 import DaumPostcode from "react-daum-postcode";
 import { Modal, Button } from "antd";
+import ImageUploadPage from "../../../../commons/imageUpload/imageUpload.container";
+import { v4 as uuidv4 } from "uuid";
 
 export default function BoardWriteUI(props) {
   return (
@@ -111,19 +113,20 @@ export default function BoardWriteUI(props) {
 
       <JH.PictureBox>
         <JH.Text>사진 첨부</JH.Text>
-        <JH.InputPic>
-          <JH.Picture onClick={props.onClickImage}>
-            <JH.Picture1>+</JH.Picture1>
-            <JH.Picture2
-              type="file"
-              onChange={props.onChangeFile}
-              ref={props.fileRef}
-            />
-          </JH.Picture>
-          <JH.UploadedImage
-            src={`https://storage.googleapis.com/${props.image}`}
+        <div onClick={props.onClickImage}>
+          <>+</>
+          <>Upload</>
+        </div>
+
+        {props.images.map((el, index) => (
+          <ImageUploadPage
+            key={uuidv4()}
+            index={index}
+            image={el}
+            defaultFileUrl={props.data?.fetchBoard?.images?.[index]}
+            onChangeFileUrls={props.onChangeFileUrls}
           />
-        </JH.InputPic>
+        ))}
       </JH.PictureBox>
 
       <JH.TextBox2>

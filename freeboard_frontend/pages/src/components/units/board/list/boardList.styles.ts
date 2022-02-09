@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { BsSearch } from "react-icons/bs";
+import { IProps } from "./boardList.types";
 
 export const Wrapper = styled.div`
   width: 1200px;
@@ -197,4 +198,10 @@ export const ContentsLineNo = styled.div`
   flex-direction: row;
   justify-content: start;
   align-items: center;
+`;
+export const SearchedWord = styled.span`
+  background-color: ${(props: IProps) =>
+    props.isMatched ? "#e6a5b5" : "none"};
+  border-radius: 3px;
+  opacity: 0.9;
 `;

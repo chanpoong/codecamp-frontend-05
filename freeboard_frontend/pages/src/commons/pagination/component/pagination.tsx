@@ -1,30 +1,27 @@
 import { useState } from "react";
 import styled from "@emotion/styled";
 import { AiOutlineArrowRight, AiOutlineArrowLeft } from "react-icons/ai";
+import { v4 as uuidv4 } from "uuid";
+import { MouseEvent } from "react";
 
 const Pagination__Wrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-
   height: 80px;
 `;
 
 const NextPage = styled(AiOutlineArrowRight)`
   padding-right: 20px;
   padding-left: 10px;
-
   font-size: 1.3rem;
   border-left: 1px silver solid;
-
   width: 150px;
-
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-
   :hover {
     background-color: gold;
     font-weight: bold;
@@ -38,9 +35,7 @@ const PrevPage = styled(AiOutlineArrowLeft)`
   padding-right: 10px;
   font-size: 1.3rem;
   border-right: 1px silver solid;
-
   width: 150px;
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -61,15 +56,12 @@ const PageIndex = styled.span`
     props.changeIndexColor === props.index + props.startPage
       ? "gold"
       : "black"};
-
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-
   padding-left: 5px;
   padding-right: 5px;
-
   :hover {
     background-color: gold;
     border-radius: 3px;
@@ -82,12 +74,13 @@ export default function Pagination(props) {
   const [currentPage, setCurrentPage] = useState(1);
   const [changeIndexColor, setChangeIndexColor] = useState(1);
 
-  const onClickPage = (event) => {
-    props.refetch({ page: Number(event.target.id) });
-    setChangeIndexColor(Number(event.target.id));
+  const onClickPage = (event: MouseEvent<HTMLSpanElement>) => {
+    if (event.target instanceof Element)
+      props.refetch({ search: props.keyword, page: Number(event.target.id) });
+    setChangeIndexColor(Number(event.currentTarget.id));
   };
 
-  const onClickPrevPage = (event) => {
+  const onClickPrevPage = () => {
     if (props.startPage <= 1) return;
     props.setStartPage((prev) => prev - 10);
     props.refetch({ page: props.startPage - 10 });
@@ -109,12 +102,13 @@ export default function Pagination(props) {
         (_, index) =>
           index + props.startPage <= props.lastPage && (
             <PageIndex
-              key={index + props.startPage}
+              key={uuidv4()}
               onClick={onClickPage}
               id={String(index + props.startPage)}
               changeIndexColor={changeIndexColor}
               index={index}
               startPage={props.startPage}
+              search={props.search}
             >
               {`  ${index + props.startPage}  `}
             </PageIndex>

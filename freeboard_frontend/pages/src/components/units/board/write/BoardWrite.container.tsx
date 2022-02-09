@@ -1,15 +1,10 @@
 import BoardWriteUI from "./BoardWrite.presenter";
-import { CREATE_BOARD, UPDATE_BOARD, UPLOAD_FILE } from "./BoardWrite.queries";
+import { CREATE_BOARD, UPDATE_BOARD } from "./BoardWrite.queries";
 import { ChangeEvent, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { useMutation } from "@apollo/client";
 import { Modal } from "antd";
 import { IMyVariables } from "./BoardWrite.types";
-import {
-  IMutation,
-  IMutationUploadFileArgs,
-} from "../../../../../../src/commons/types/generated/types";
-import { checkFileValidation } from "../../../../commons/libraries/utils";
 
 export default function MyPage(props) {
   const router = useRouter();
@@ -28,14 +23,10 @@ export default function MyPage(props) {
   const [txtError, setTxtError] = useState("");
   const [getYoutubeUrl, setYoutubeUrl] = useState("");
 
-  const [image, setImage] = useState("");
+  const [images, setImages] = useState(["", "", ""]);
 
   const [createBoard] = useMutation(CREATE_BOARD);
   const [updateBoard] = useMutation(UPDATE_BOARD);
-  const [uploadFile] = useMutation<
-    Pick<IMutation, "uploadFile">,
-    IMutationUploadFileArgs
-  >(UPLOAD_FILE);
 
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isSignupModalVisible, setIsSignupModalVisible] = useState(false);
@@ -43,6 +34,12 @@ export default function MyPage(props) {
   const [address, setAddress] = useState("");
   const [zipcode, setZipCode] = useState("");
   const [addressDetail, setAddressDetail] = useState("");
+
+  const onChangeFileUrls = (fileUrl: string, index: number) => {
+    const newFileUrls = [...images];
+    newFileUrls[index] = fileUrl;
+    setImages(newFileUrls);
+  };
   //modal 활성 함수
   const onToggleModal = () => {
     setIsModalVisible((prev) => !prev);
@@ -87,7 +84,7 @@ export default function MyPage(props) {
         title: title,
         contents: txt,
         youtubeUrl: getYoutubeUrl,
-        images: image,
+        images,
         boardAddress: {
           zipcode,
           address,
@@ -107,7 +104,7 @@ export default function MyPage(props) {
       if (title) myVariables.title = title;
       if (txt) myVariables.contents = txt;
       if (name) myVariables.writer = name;
-      if (image) myVariables.images = image;
+      if (images) myVariables.images = images;
       if (zipcode || address || addressDetail) {
         myVariables.boardAddress = {};
         if (zipcode) myVariables.boardAddress.zipcode = zipcode;
@@ -132,32 +129,6 @@ export default function MyPage(props) {
     }
 
     router.push(`/boards/${router.query.detail}`);
-  };
-
-  const fileRef = useRef<HTMLInputElement>(null);
-  const onClickImage = () => {
-    fileRef.current?.click();
-  };
-  //파일 업로드 함수
-  const onChangeFile = async (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-
-    const isValid = checkFileValidation(file);
-    if (!isValid) {
-      return;
-    }
-
-    try {
-      const result = await uploadFile({
-        variables: {
-          file,
-        },
-      });
-      console.log(result?.data?.uploadFile?.url);
-      setImage(result?.data?.uploadFile?.url || "");
-    } catch (error) {
-      alert(error.message);
-    }
   };
 
   //빈칸체크 후 공백이아니라면 에러메세지 삭제
@@ -302,10 +273,8 @@ export default function MyPage(props) {
       isCancelModalVisible={isCancelModalVisible}
       cancelModalPressCancel={cancelModalPressCancel}
       onInputAddressDetail={onInputAddressDetail}
-      image={image}
-      onChangeFile={onChangeFile}
-      onClickImage={onClickImage}
-      fileRef={fileRef}
+      images={images}
+      onChangeFileUrls={onChangeFileUrls}
     />
   );
 }

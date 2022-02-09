@@ -299,44 +299,6 @@ export const PictureBox = styled.div`
   padding: 15px 30px 15px 30px;
 `;
 
-export const InputPic = styled.div`
-  width: 100%;
-
-  display: flex;
-  flex-direction: row;
-`;
-
-export const Picture = styled.div`
-  width: 78px;
-  height: 78px;
-  background: #bdbdbd;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  border: 1px black solid;
-  margin-right: 10px;
-  cursor: pointer;
-`;
-export const Picture1 = styled.div`
-  font-size: 15px;
-  color: #000000;
-`;
-export const Picture2 = styled.input`
-  /* font-family: Noto Sans CJK KR;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 18px;
-  background: none;
-  border: none;
-  cursor: pointer;
-
-  color: #4f4f4f; */
-  display: none;
-`;
 export const UploadedImage = styled.img`
   width: 50px;
   height: 50px;
