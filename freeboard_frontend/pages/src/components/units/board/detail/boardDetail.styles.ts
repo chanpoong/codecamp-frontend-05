@@ -157,6 +157,13 @@ export const ContentsWriter = styled.div`
   font-size: 24px;
   line-height: 36px;
 `;
+
+export const ContentsPopoverBtn = styled.div`
+  width: 120px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+`;
 export const ContentsText = styled.div`
   width: 100%;
   /* height: 700px; */
@@ -343,3 +350,11 @@ export const DisLikeBtn = styled(DislikeOutlined)`
   cursor: pointer;
 `;
 export const DisLikeCount = styled.label``;
+
+export const DetailImages = styled.img`
+  width: 100%;
+  height: 100%;
+
+  max-height: 200px;
+  max-width: 200px;
+`;

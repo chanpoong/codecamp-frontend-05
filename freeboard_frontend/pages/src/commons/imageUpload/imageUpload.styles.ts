@@ -12,6 +12,9 @@ export const Picture = styled.img`
   height: 78px;
   background: #bdbdbd;
 
+  max-width: 150px;
+  max-height: 150px;
+
   display: flex;
   flex-direction: column;
   justify-content: center;

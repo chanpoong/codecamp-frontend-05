@@ -1,42 +1,62 @@
 import BoardCommentsPage from "../../../commons/comments/index";
 import * as JH from "./boardDetail.styles";
 import ReactPlayer from "react-player";
-import { Modal, Button, Carousel } from "antd";
+import { Modal, Popover, Button } from "antd";
+import { PictureOutlined, HomeOutlined } from "@ant-design/icons";
 
 export default function BoardDetailUI(props) {
+  const userAddress = (
+    <div>
+      <div>
+        우편번호:
+        {props.data?.fetchBoard.boardAddress.zipcode || ""} <br />
+        주소:
+        {props.data?.fetchBoard.boardAddress.address || ""}
+        <br />
+        상세주소:
+        {props.data?.fetchBoard.boardAddress.addressDetail || ""}
+      </div>
+    </div>
+  );
+  const imagesPopover = (
+    <div>
+      {props.data?.fetchBoard.images.map((el, index) =>
+        el ? (
+          <JH.DetailImages
+            src={`https://storage.googleapis.com/${props.data?.fetchBoard.images?.[index]}`}
+            key={index}
+          />
+        ) : (
+          ""
+        )
+      )}
+    </div>
+  );
+
   return (
     <JH.Wrapper>
       <JH.WrapperBody>
         <JH.WrapperBody__contents>
           <JH.ContentsHeader>
-            {/* <JH.ContentsNum>
-              글번호: {props.data?.fetchBoard._id}
-            </JH.ContentsNum> */}
             <JH.ContentsTitle>
               제목: {props.data?.fetchBoard.title}
             </JH.ContentsTitle>
             <JH.ContentsWriter>
               작성자: {props.data?.fetchBoard.writer}
             </JH.ContentsWriter>
+            <JH.ContentsPopoverBtn>
+              <Popover content={userAddress} title="Title" trigger="click">
+                <Button>
+                  <HomeOutlined />
+                </Button>
+              </Popover>
+              <Popover content={imagesPopover} title="Title" trigger="click">
+                <Button>
+                  <PictureOutlined />
+                </Button>
+              </Popover>
+            </JH.ContentsPopoverBtn>
           </JH.ContentsHeader>
-
-          <div>
-            우편번호:
-            {props.data?.fetchBoard.boardAddress.zipcode || ""} <br />
-            주소:
-            {props.data?.fetchBoard.boardAddress.address || ""}
-            <br />
-            상세주소:
-            {props.data?.fetchBoard.boardAddress.addressDetail || ""}
-          </div>
-          <div>
-            {props.data?.fetchBoard.images.map((_, index) => (
-              <img
-                src={`https://storage.googleapis.com/${props.data?.fetchBoard.images?.[index]}`}
-                key={index}
-              />
-            ))}
-          </div>
 
           <JH.ContentsBody>
             <JH.ContentsText>{props.data?.fetchBoard.contents}</JH.ContentsText>

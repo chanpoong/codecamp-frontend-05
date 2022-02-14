@@ -399,3 +399,8 @@ export const ErrorMassages = styled.span`
 
   padding-left: 15px;
 `;
+
+export const UploadedImageWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+`;

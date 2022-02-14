@@ -4,6 +4,7 @@ export interface IInfoPresenterPageProps {
   result?: any;
   itemIndexNumber: number;
   deleteFunction: string;
+  isLoading: boolean;
   trifordFunction: string;
   setOptionFunction: string;
   setOptionBraceletFunction: object;

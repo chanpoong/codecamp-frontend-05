@@ -113,16 +113,19 @@ export default function BoardWriteUI(props) {
 
       <JH.PictureBox>
         <JH.Text>사진 첨부</JH.Text>
-
-        {props.images.map((el, index) => (
-          <ImageUploadPage
-            key={uuidv4()}
-            index={index}
-            images={el}
-            defaultFileUrl={props.data?.fetchBoard?.images?.[index]}
-            onChangeFileUrls={props.onChangeFileUrls}
-          />
-        ))}
+        <JH.UploadedImageWrapper>
+          {props.images.map((el, index) => (
+            <ImageUploadPage
+              key={uuidv4()}
+              index={index}
+              images={el}
+              defaultFileUrl={
+                props.isEdit ? el : props.data?.fetchBoard?.images?.[index]
+              }
+              onChangeFileUrls={props.onChangeFileUrls}
+            />
+          ))}
+        </JH.UploadedImageWrapper>
       </JH.PictureBox>
 
       <JH.TextBox2>

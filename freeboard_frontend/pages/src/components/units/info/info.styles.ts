@@ -20,8 +20,16 @@ export const InfoTitleWrapper = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-`;
 
+  margin-bottom: 20px;
+`;
+export const NicknameTitle = styled.span`
+  color: white;
+  margin-right: 20px;
+`;
+export const InputNickname = styled.input`
+  color: black;
+`;
 export const InfoDataWrapper = styled.div`
   width: 100%;
   height: auto;

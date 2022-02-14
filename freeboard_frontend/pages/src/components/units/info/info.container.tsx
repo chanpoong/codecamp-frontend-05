@@ -7,6 +7,7 @@ export default function InfoContainerPage() {
   const [itemIndexNumber, setItemIndexNumber] = useState(0);
   const [result, setResult] = useState();
   const [itemInfoVisible, setItemInfoVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const openItemInfo = (event) => {
     setItemIndexNumber(event.target.id);
@@ -19,6 +20,7 @@ export default function InfoContainerPage() {
 
   const onClickSearch = () => {
     fetchInfo();
+    setIsLoading(true);
   };
 
   const fetchInfo = async () => {
@@ -64,6 +66,7 @@ export default function InfoContainerPage() {
   return (
     <InfoPresenterPage
       result={result}
+      isLoading={isLoading}
       itemIndexNumber={itemIndexNumber}
       openItemInfo={openItemInfo}
       inputNickname={inputNickname}

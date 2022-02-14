@@ -23,18 +23,17 @@ export default function ImageUploadPage(props) {
   //파일 업로드 함수
   const onChangeFile = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    console.log(event.target.files?.[0]);
     const test = checkFileValidation(file);
     if (!test) return;
 
     try {
       const result = await uploadFile({ variables: { file } });
       props.onChangeFileUrls(result.data?.uploadFile?.url, props.index);
-      console.log(result);
     } catch (error) {
       alert(error.message);
     }
   };
+
   return (
     <ImageUploadPageUI
       fileRef={fileRef}

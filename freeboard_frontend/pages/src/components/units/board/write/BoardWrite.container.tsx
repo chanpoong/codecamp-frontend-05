@@ -237,11 +237,11 @@ export default function MyPage(props) {
         : router.push(`/boards/`)
     }`;
   }
-  // useEffect(() => {
-  //   if (props.data?.fetchBoard.images?.length) {
-  //     setImages([...props.data?.fetchBoard.images]);
-  //   }
-  // }, [props.data]);
+  useEffect(() => {
+    if (props.data?.fetchBoard.images?.length) {
+      setImages([...props.data?.fetchBoard.images]);
+    }
+  }, [props.data]);
 
   return (
     <BoardWriteUI

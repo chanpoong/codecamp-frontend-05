@@ -15,6 +15,8 @@ import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 import { createUploadLink } from "apollo-upload-client";
+import { createContext, useState, Dispatch, SetStateAction } from "react";
+import { AppProps } from "next/app";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -29,25 +31,41 @@ const firebaseConfig = {
 // Initialize Firebase
 export const FirebaseApp = initializeApp(firebaseConfig);
 
-function MyApp({ Component, pageProps }) {
+interface IGlobalContext {
+  accessToken?: string;
+  setAccessToken?: Dispatch<SetStateAction<string>>;
+}
+
+export const GlobalContext = createContext<IGlobalContext>({});
+
+function MyApp({ Component, pageProps }: AppProps) {
+  const [accessToken, setAccessToken] = useState("");
+  const value = {
+    accessToken,
+    setAccessToken,
+  };
+
   const uploadLink = createUploadLink({
     uri: "http://backend05.codebootcamp.co.kr/graphql",
+    headers: { Authorization: `Bearer ${accessToken}` },
   });
 
   const client = new ApolloClient({
     // uploadLink의 타입은 uploadLink as unknown as ApolloLink
-    link: ApolloLink.from([uploadLink]),
+    link: ApolloLink.from([uploadLink as unknown as ApolloLink]),
     //API 참조를 위한 주소는 uri에 작성
     cache: new InMemoryCache(),
   }); //
 
   return (
-    <ApolloProvider client={client}>
-      <Global styles={GlobalStyles} />
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-    </ApolloProvider>
+    <GlobalContext.Provider value={value}>
+      <ApolloProvider client={client}>
+        <Global styles={GlobalStyles} />
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </ApolloProvider>
+    </GlobalContext.Provider>
   );
 }
 
