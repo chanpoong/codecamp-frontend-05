@@ -1,7 +1,7 @@
 import BoardCommentsPage from "../../../commons/comments/index";
 import * as JH from "./boardDetail.styles";
 import ReactPlayer from "react-player";
-import { Modal, Button } from "antd";
+import { Modal, Button, Carousel } from "antd";
 
 export default function BoardDetailUI(props) {
   return (
@@ -30,9 +30,12 @@ export default function BoardDetailUI(props) {
             {props.data?.fetchBoard.boardAddress.addressDetail || ""}
           </div>
           <div>
-            <img
-              src={`https://storage.googleapis.com/${props.data?.fetchBoard.images?.[0]}`}
-            />
+            {props.data?.fetchBoard.images.map((_, index) => (
+              <img
+                src={`https://storage.googleapis.com/${props.data?.fetchBoard.images?.[index]}`}
+                key={index}
+              />
+            ))}
           </div>
 
           <JH.ContentsBody>

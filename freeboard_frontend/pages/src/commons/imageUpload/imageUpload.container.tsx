@@ -22,12 +22,15 @@ export default function ImageUploadPage(props) {
 
   //파일 업로드 함수
   const onChangeFile = async (event: ChangeEvent<HTMLInputElement>) => {
-    const file = checkFileValidation(event.target.files?.[0]);
-    if (!file) return;
+    const file = event.target.files?.[0];
+    console.log(event.target.files?.[0]);
+    const test = checkFileValidation(file);
+    if (!test) return;
 
     try {
       const result = await uploadFile({ variables: { file } });
       props.onChangeFileUrls(result.data?.uploadFile?.url, props.index);
+      console.log(result);
     } catch (error) {
       alert(error.message);
     }
@@ -35,7 +38,7 @@ export default function ImageUploadPage(props) {
   return (
     <ImageUploadPageUI
       fileRef={fileRef}
-      image={props.image}
+      images={props.images}
       defaultFileUrl={props.defaultFileUrl}
       onClickImage={onClickImage}
       onChangeFile={onChangeFile}

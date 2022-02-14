@@ -113,16 +113,12 @@ export default function BoardWriteUI(props) {
 
       <JH.PictureBox>
         <JH.Text>사진 첨부</JH.Text>
-        <div onClick={props.onClickImage}>
-          <>+</>
-          <>Upload</>
-        </div>
 
         {props.images.map((el, index) => (
           <ImageUploadPage
             key={uuidv4()}
             index={index}
-            image={el}
+            images={el}
             defaultFileUrl={props.data?.fetchBoard?.images?.[index]}
             onChangeFileUrls={props.onChangeFileUrls}
           />

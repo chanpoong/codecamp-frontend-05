@@ -1,6 +1,6 @@
 import BoardWriteUI from "./BoardWrite.presenter";
 import { CREATE_BOARD, UPDATE_BOARD } from "./BoardWrite.queries";
-import { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { useMutation } from "@apollo/client";
 import { Modal } from "antd";
@@ -237,6 +237,11 @@ export default function MyPage(props) {
         : router.push(`/boards/`)
     }`;
   }
+  // useEffect(() => {
+  //   if (props.data?.fetchBoard.images?.length) {
+  //     setImages([...props.data?.fetchBoard.images]);
+  //   }
+  // }, [props.data]);
 
   return (
     <BoardWriteUI

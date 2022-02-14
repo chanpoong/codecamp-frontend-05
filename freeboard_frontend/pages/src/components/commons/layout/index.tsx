@@ -1,4 +1,3 @@
-import { ReactChild } from "react";
 import LayoutBanner from "./banner/index";
 import LayoutFooter from "./footer/index";
 import LayoutHeader from "./header/index";
@@ -16,8 +15,8 @@ const BodyWrapper = styled.div`
   display: flex;
 `;
 
-// 헤더를 숨기고 싶은 페이지를 설정하기
-const HIDDEN_SIDEBAR = ["/"];
+// 사이드바를 숨기고 싶은 페이지를 설정하기
+const HIDDEN_SIDEBAR = ["/", "/login"];
 
 // interface IProps {
 //   children: ReactChild;
