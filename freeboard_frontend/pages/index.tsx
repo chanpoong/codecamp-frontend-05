@@ -18,6 +18,10 @@ const HomeImgVideo = styled.video`
   width: 100%;
   height: 100%;
 `;
+const Video = styled.source`
+  width: 100%;
+  height: 100%;
+`;
 
 const MenuChoose = styled.div`
   position: absolute;
@@ -113,7 +117,7 @@ export default function Home() {
     setToMovePage("/attack");
   };
 
-  const onClickToMove = (event) => {
+  const onClickToMove = () => {
     router.push(`/${toMovePage}`);
   };
 
@@ -122,7 +126,7 @@ export default function Home() {
       <Wrapper>
         <HomeImg>
           <HomeImgVideo muted autoPlay loop>
-            <source src="/img/home/kadanlogin.mp4" type="video/mp4" />
+            <Video src="/img/home/kadanlogin.mp4" type="video/mp4" />
           </HomeImgVideo>
         </HomeImg>
 

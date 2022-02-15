@@ -14,7 +14,8 @@ export const InputBox = styled.div`
   width: 400px;
   height: auto;
   background: white;
-  opacity: 0.7;
+  opacity: 0.85;
+  border: none;
 
   display: flex;
   flex-direction: column;
@@ -22,6 +23,7 @@ export const InputBox = styled.div`
   align-items: center;
 
   border-radius: 5px;
+  box-shadow: 8px 8px #d4af37;
 `;
 
 export const SignupTitle = styled.h2`
@@ -36,10 +38,22 @@ export const InputUserInfo = styled.input`
 
   padding: 5px;
   margin: 10px;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+
+  :focus {
+    background-color: gold;
+  }
 `;
 export const SubmitSignup = styled.button`
-  text-align: center;
+  text-align: end;
 
   margin: 10px 5px;
   padding: 2px 10px;
+  border: none;
+  cursor: pointer;
+  :hover {
+    background-color: #d4af37;
+  }
 `;

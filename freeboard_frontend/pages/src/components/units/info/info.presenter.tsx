@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { SearchOutlined } from "@ant-design/icons";
 import LoadingPage from "../../../commons/loading/index";
 import InfoSearchItemPage from "./info.searchitem";
 import * as JH from "./info.styles";
@@ -12,10 +12,12 @@ export default function InfoPresenterPage(props: IInfoPresenterPageProps) {
 
   return (
     <JH.InfoPageWrapper>
-      <JH.InfoTitleWrapper>
+      <JH.InfoTitleWrapper onKeyPress={props.onPressEnter}>
         <JH.NicknameTitle>검색할 캐릭터 명:</JH.NicknameTitle>
         <JH.InputNickname onChange={props.inputNickname} placeholder="Search" />
-        <button onClick={props.onClickSearch}>검색</button>
+        <JH.SearchInfo onClick={props.onClickSearch}>
+          <SearchOutlined />
+        </JH.SearchInfo>
       </JH.InfoTitleWrapper>
       {!props.result && props.isLoading ? <LoadingPage /> : ""}
       {props.result && (

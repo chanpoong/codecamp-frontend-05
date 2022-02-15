@@ -15,7 +15,13 @@ import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 import { createUploadLink } from "apollo-upload-client";
-import { createContext, useState, Dispatch, SetStateAction } from "react";
+import {
+  createContext,
+  useState,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+} from "react";
 import { AppProps } from "next/app";
 
 // Your web app's Firebase configuration
@@ -44,6 +50,26 @@ function MyApp({ Component, pageProps }: AppProps) {
     accessToken,
     setAccessToken,
   };
+
+  //현재 위치가 Br일때 실행
+  // if (process.browser) {
+  //   if (localStorage.getItem("accessToken")) {
+  //     setAccessToken(localStorage.getItem("accessToken"));
+  //   }
+  // }
+  //window가 undefined가 아닐 때 실행 (윈도우는 브라우저에 있으므로 브라우저에서 실행하는것과 동일)
+  // if(typeof window !== "undefined"){
+  //   if (localStorage.getItem("accessToken")) {
+  //     setAccessToken(localStorage.getItem("accessToken"));
+  //   }
+  // }
+
+  // 나머지 컴포넌트가 전부 그려지고 난 후 실행되게하는 명령어인 useEffect를 사용해서 pre-rendering에서 오류나지 않게 설정
+  useEffect(() => {
+    if (localStorage.getItem("accessToken")) {
+      setAccessToken(localStorage.getItem("accessToken"));
+    }
+  }, []);
 
   const uploadLink = createUploadLink({
     uri: "http://backend05.codebootcamp.co.kr/graphql",

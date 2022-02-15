@@ -3,15 +3,13 @@ import { BsSearch } from "react-icons/bs";
 import { IProps } from "./boardList.types";
 
 export const Wrapper = styled.div`
-  width: 1200px;
+  width: 100%;
   height: 100%;
   top: 317px;
   left: 360px;
   bottom: 350px;
 
   padding: 50px;
-  margin-top: 100px;
-  margin-left: 100px;
 
   background: #ffffff;
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
@@ -69,7 +67,7 @@ export const WrapperBody = styled.div`
   justify-content: center;
 `;
 export const ContentsLine = styled.div`
-  width: 1100px;
+  width: 100%;
   height: 80px;
 
   border-bottom: 1px solid gray;
@@ -185,7 +183,7 @@ export const ContentsPages = styled.div`
 
 // Wrapper CSS for Pagination (boards)
 export const Boards__Wrapper = styled.div`
-  width: 1100px;
+  width: 100%;
   height: auto;
 
   display: flex;

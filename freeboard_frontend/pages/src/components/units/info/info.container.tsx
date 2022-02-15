@@ -1,3 +1,4 @@
+import { Modal } from "antd";
 import axios from "axios";
 import { useState } from "react";
 import InfoPresenterPage from "./info.presenter";
@@ -17,9 +18,16 @@ export default function InfoContainerPage() {
   const inputNickname = (event) => {
     setCharacterName(event.target.value);
   };
+  const onPressEnter = (e) => {
+    if (e.key === "Enter") onClickSearch();
+  };
 
   const onClickSearch = () => {
+    if (!characterName)
+      return Modal.error({ content: "캐릭터 이름을 입력해주세요." });
+
     fetchInfo();
+    setResult(null);
     setIsLoading(true);
   };
 
@@ -28,6 +36,7 @@ export default function InfoContainerPage() {
       `http://apis.iptime.org/LostArk/Character/Character-Item?NickName=${characterName}`
     );
     setResult(Object.values(data?.data?.Items));
+    setIsLoading(false);
   };
 
   const deleteFunction = (match) => {
@@ -63,6 +72,7 @@ export default function InfoContainerPage() {
     }
   };
   console.log(result);
+
   return (
     <InfoPresenterPage
       result={result}
@@ -75,6 +85,7 @@ export default function InfoContainerPage() {
       trifordFunction={trifordFunction}
       setOptionFunction={setOptionFunction}
       setOptionBraceletFunction={setOptionBraceletFunction}
+      onPressEnter={onPressEnter}
     />
   );
 }

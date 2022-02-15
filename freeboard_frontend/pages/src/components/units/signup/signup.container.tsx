@@ -11,8 +11,11 @@ import { CREATE_USER } from "./signup.queries";
 
 export default function SignupPage() {
   const [createUserId, setCreateUserId] = useState("");
+  const [checkUserId, setCheckUserId] = useState("");
   const [createUserPassword, setCreateUserPassword] = useState("");
+  const [checkUserPassword, setCheckUserPassword] = useState("");
   const [createUserName, setCreateUserName] = useState("");
+
   const router = useRouter();
 
   const onChangeCreateUserId = (e) => {
@@ -23,6 +26,16 @@ export default function SignupPage() {
   };
   const onChangeCreateUserName = (e) => {
     setCreateUserName(e.target.value);
+  };
+  const onChangeCheckUserId = (e) => {
+    setCheckUserId(e.target.value);
+  };
+  const onChangeCheckUserPassword = (e) => {
+    setCheckUserPassword(e.target.value);
+  };
+
+  const onPressEnter = (e) => {
+    if (e.key === "Enter") onClickSignup();
   };
 
   const [createUser] = useMutation<
@@ -36,7 +49,17 @@ export default function SignupPage() {
       createUserPassword === "" ||
       createUserName === ""
     )
-      Modal.error({ content: "정보를 확인해주세요." });
+      return Modal.error({ content: "정보를 확인해주세요." });
+
+    if (
+      createUserId !== checkUserId ||
+      createUserPassword !== checkUserPassword
+    ) {
+      return Modal.error({
+        content: "이메일 혹은 비밀번호가 입력한 정보와 다릅니다.",
+      });
+    }
+
     try {
       const result = await createUser({
         variables: {
@@ -63,9 +86,12 @@ export default function SignupPage() {
   return (
     <SignupPageUI
       onClickSignup={onClickSignup}
+      onPressEnter={onPressEnter}
       onChangeCreateUserId={onChangeCreateUserId}
       onChangeCreateUserPassword={onChangeCreateUserPassword}
       onChangeCreateUserName={onChangeCreateUserName}
+      onChangeCheckUserId={onChangeCheckUserId}
+      onChangeCheckUserPassword={onChangeCheckUserPassword}
     />
   );
 }

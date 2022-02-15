@@ -5,28 +5,33 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 const Wrapper = styled.div`
+  width: 100%;
   height: 300px;
+  /* overflow: hidden; */
   background-color: black;
   padding: 5px 150px 150px 150px;
 `;
 const SliderContents = styled.div`
-  width: 1200px;
+  /* width: 100%;
+  height: 100%; */
 
-  display: flex;
+  /* display: flex;
   flex-direction: row;
   justify-content: center;
-  align-items: center;
+  align-items: center; */
 `;
 const BannerImage = styled.img`
-  width: 600px;
-  height: 280px;
-
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+  width: 100%;
+  height: 100%;
 `;
 const CarouselSlider = styled(Slider)`
+  width: 100%;
+  height: 300px;
+
+  div {
+    width: 100%;
+    height: 100%;
+  }
   .slick-dots li button:before {
     color: white;
   }
@@ -41,7 +46,7 @@ export default function LayoutBanner() {
     infinite: true,
     slidesToShow: 3,
     slidesToScroll: 1,
-    autoplay: true,
+    autoplay: false,
     autoplaySpeed: 2000,
     pauseOnHover: true,
   };

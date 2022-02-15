@@ -27,6 +27,9 @@ export default function LoginComponentPage() {
   const onChangeUserPassword = (e) => {
     setGetUserPassword(e.target.value);
   };
+  const onPressEnter = (e) => {
+    if (e.key === "Enter") onClickLogin();
+  };
 
   const onClickLogin = async () => {
     if (getUserId === "" || getUserPassword === "")
@@ -38,7 +41,11 @@ export default function LoginComponentPage() {
           password: getUserPassword,
         },
       });
-      setAccessToken(result.data?.loginUser.accessToken);
+      const accessToken = result.data?.loginUser.accessToken || "";
+      if (setAccessToken) {
+        setAccessToken(accessToken);
+        localStorage.setItem("accessToken", accessToken);
+      }
       router.push(`/boards`);
     } catch (error) {
       if (error instanceof Error) Modal.error({ content: error.message });
@@ -50,6 +57,7 @@ export default function LoginComponentPage() {
       onChangeUserId={onChangeUserId}
       onChangeUserPassword={onChangeUserPassword}
       onClickLogin={onClickLogin}
+      onPressEnter={onPressEnter}
     />
   );
 }

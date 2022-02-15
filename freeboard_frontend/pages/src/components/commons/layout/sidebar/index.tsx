@@ -34,6 +34,9 @@ export default function LayoutSidebar() {
   const onClickToBoards = () => {
     router.push("/boards");
   };
+  const onClickToProducts = () => {
+    router.push("/products");
+  };
 
   return (
     <Wrapper>
@@ -49,14 +52,9 @@ export default function LayoutSidebar() {
           </Menu.Item>
         </SideBarSubMenu>
         <SideBarSubMenu key="sub4" icon={<InboxOutlined />} title="거래 게시판">
-          <Menu.Item key="13">루페온</Menu.Item>
-          <Menu.Item key="14">아브렐슈드</Menu.Item>
-          <Menu.Item key="15">실리안</Menu.Item>
-          <Menu.Item key="16">카마인</Menu.Item>
-          <Menu.Item key="17">니나브</Menu.Item>
-          <Menu.Item key="18">카제로스</Menu.Item>
-          <Menu.Item key="19">카단</Menu.Item>
-          <Menu.Item key="20">아만</Menu.Item>
+          <Menu.Item key="13" onClick={onClickToProducts}>
+            거래 게시판
+          </Menu.Item>
         </SideBarSubMenu>
         <SideBarSubMenu
           key="sub2"

@@ -1,8 +1,10 @@
 import { gql, useMutation, useQuery } from "@apollo/client";
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
+import { useContext } from "react";
 
 import { IQuery } from "../../../../../../src/commons/types/generated/types";
+import { GlobalContext } from "../../../../../_app";
 
 const Wrapper = styled.div`
   height: 150px;
@@ -24,6 +26,9 @@ const LoginButton = styled.button`
   border: none;
   cursor: pointer;
   margin-left: 5px;
+  :hover {
+    background-color: white;
+  }
 `;
 const LoggedinUserName = styled.div`
   color: white;
@@ -39,8 +44,9 @@ const FETCH_USER_LOGGED_IN = gql`
     }
   }
 `;
+
 export const LOGOUT_USER = gql`
-  mutation logoutUser {
+  mutation {
     logoutUser
   }
 `;
@@ -48,6 +54,7 @@ export const LOGOUT_USER = gql`
 export default function LayoutHeader() {
   const router = useRouter();
   const [logoutUser] = useMutation(LOGOUT_USER);
+  const { setAccessToken } = useContext(GlobalContext);
 
   const { data } =
     useQuery<Pick<IQuery, "fetchUserLoggedIn">>(FETCH_USER_LOGGED_IN);
@@ -58,11 +65,17 @@ export default function LayoutHeader() {
     router.push("/");
   };
   const onClickLogOut = () => {
-    logoutUser();
+    if (setAccessToken) {
+      setAccessToken("");
+      localStorage.setItem("accessToken", "");
+      router.push("/");
+    }
   };
+
   const onClickRefresh = () => {
     window.location.replace("/");
   };
+
   const onClickSignup = () => {
     router.push("/signup");
   };
@@ -76,7 +89,7 @@ export default function LayoutHeader() {
       {data?.fetchUserLoggedIn ? (
         <div>
           <LoggedinUserName>{`${data?.fetchUserLoggedIn?.name} 님 환영합니다`}</LoggedinUserName>
-          <LoginButton onClick={onClickRefresh}>Logout </LoginButton>
+          <LoginButton onClick={onClickLogOut}>Logout </LoginButton>
         </div>
       ) : (
         <div>

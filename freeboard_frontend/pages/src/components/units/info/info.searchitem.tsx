@@ -1,3 +1,4 @@
+import LoadingPage from "../../../commons/loading";
 import * as JH from "./info.styles";
 
 export default function InfoSearchItemPage(props) {

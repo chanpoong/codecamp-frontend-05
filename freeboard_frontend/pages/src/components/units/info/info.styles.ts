@@ -1,3 +1,4 @@
+import { SearchOutlined } from "@ant-design/icons";
 import styled from "@emotion/styled";
 import { Popover, Button } from "antd";
 
@@ -29,7 +30,21 @@ export const NicknameTitle = styled.span`
 `;
 export const InputNickname = styled.input`
   color: black;
+  margin-right: 5px;
+  border: none;
 `;
+export const SearchInfo = styled.button`
+  font-size: 1rem;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  background-color: white;
+
+  :hover {
+    background-color: #b5925f;
+  }
+`;
+
 export const InfoDataWrapper = styled.div`
   width: 100%;
   height: auto;

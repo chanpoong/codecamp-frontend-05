@@ -17,7 +17,7 @@ const Spinner = styled(Oval)`
 `;
 
 //
-export default function LoadingPage() {
+export default function LoadingPage(el) {
   // const antIcon =
   return (
     <LoadingIconWrapper>

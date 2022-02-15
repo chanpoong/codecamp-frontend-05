@@ -8,7 +8,7 @@ export default function LoginComponentPageUI(props) {
           <source src="/img/login/ninabLogin.mp4" type="video/mp4" />
         </JH.HomeImgVideo>
 
-        <JH.MenuChoose>
+        <JH.MenuChoose onKeyPress={props.onPressEnter}>
           <JH.MenuTitle>login Info</JH.MenuTitle>
           <JH.MenuButtonWrapper>
             <JH.MenuButtonLine
@@ -16,7 +16,7 @@ export default function LoginComponentPageUI(props) {
               onChange={props.onChangeUserId}
               placeholder="ID"
             />
-            
+
             <JH.MenuButtonLine
               type="password"
               onChange={props.onChangeUserPassword}

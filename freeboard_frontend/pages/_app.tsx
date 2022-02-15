@@ -10,7 +10,13 @@ import { Global, css } from "@emotion/react";
 import { GlobalStyles } from "./src/commons/styles/globalstyles";
 import { initializeApp } from "firebase/app";
 import { createUploadLink } from "apollo-upload-client";
-import { createContext, useState, Dispatch, SetStateAction } from "react";
+import {
+  createContext,
+  useState,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+} from "react";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBdCfpc9Sqb_C1sHS_lBZtw2lXi-2cWIiQ",
@@ -36,6 +42,12 @@ function MyApp({ Component, pageProps }) {
     accessToken,
     setAccessToken,
   };
+
+  useEffect(() => {
+    if (localStorage.getItem("accessToken")) {
+      setAccessToken(localStorage.getItem("accessToken"));
+    }
+  }, []);
 
   const uploadLink = createUploadLink({
     uri: "http://backend05.codebootcamp.co.kr/graphql",

@@ -43,10 +43,11 @@ export default function LoginPage() {
         },
       });
       const accessToken = result.data?.loginUser.accessToken || "";
-
-      setAccessToken(accessToken);
-
-      router.push(`/22-02-login-success`);
+      if (setAccessToken) {
+        setAccessToken(accessToken);
+        localStorage.setItem("accessToken", accessToken);
+      }
+      router.push(`/23-02-login-success`);
     } catch (error) {
       if (error instanceof Error) Modal.error({ content: error.message });
     }

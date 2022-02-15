@@ -60,12 +60,10 @@ export const MenuButtonLine = styled.input`
   background-color: #35344a;
   border: none;
 
-  :hover {
-    background-color: white;
-    color: black;
-  }
   :focus {
     border: darkorange 1px solid;
+    background-color: white;
+    color: black;
   }
 `;
 
