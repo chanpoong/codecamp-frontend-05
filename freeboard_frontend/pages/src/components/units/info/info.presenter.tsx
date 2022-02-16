@@ -12,9 +12,13 @@ export default function InfoPresenterPage(props: IInfoPresenterPageProps) {
 
   return (
     <JH.InfoPageWrapper>
-      <JH.InfoTitleWrapper onKeyPress={props.onPressEnter}>
+      <JH.InfoTitleWrapper>
         <JH.NicknameTitle>검색할 캐릭터 명:</JH.NicknameTitle>
-        <JH.InputNickname onChange={props.inputNickname} placeholder="Search" />
+        <JH.InputNickname
+          onKeyPress={props.onPressEnter}
+          onChange={props.inputNickname}
+          placeholder="Search"
+        />
         <JH.SearchInfo onClick={props.onClickSearch}>
           <SearchOutlined />
         </JH.SearchInfo>

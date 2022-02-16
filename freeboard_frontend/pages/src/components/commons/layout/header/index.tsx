@@ -36,6 +36,7 @@ const LoggedinUserName = styled.div`
 `;
 
 // --- 위는 CSS
+
 const FETCH_USER_LOGGED_IN = gql`
   query fetchUserLoggedIn {
     fetchUserLoggedIn {
@@ -64,16 +65,16 @@ export default function LayoutHeader() {
   const onClickToHome = () => {
     router.push("/");
   };
+
   const onClickLogOut = () => {
     if (setAccessToken) {
-      setAccessToken("");
-      localStorage.setItem("accessToken", "");
-      router.push("/");
+      // setAccessToken("");
+      // localStorage.setItem("accessToken", "");
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("userInfo");
+      // router.push("/");
+      window.location.replace("/");
     }
-  };
-
-  const onClickRefresh = () => {
-    window.location.replace("/");
   };
 
   const onClickSignup = () => {
@@ -81,7 +82,7 @@ export default function LayoutHeader() {
   };
 
   return (
-    <Wrapper>
+    <Wrapper id="aaa">
       <LogoImage
         onClick={onClickToHome}
         src="/img/lostarklogo/lostarklogo4.png"

@@ -1,15 +1,20 @@
-import { useContext, useState } from "react";
-import { useRouter } from "next/router";
-import LoginComponentPageUI from "./loginComponent.presenter";
-import { GlobalContext } from "../../../../../_app";
 import { gql, useApolloClient, useMutation } from "@apollo/client";
-import { LOGIN_USER } from "./loginComponent.queries";
+import { Modal } from "antd";
+import { useRouter } from "next/router";
+import { ChangeEvent, useContext, useState } from "react";
 import {
   IMutation,
   IMutationLoginUserArgs,
-} from "../../../../../../src/commons/types/generated/types";
-import { Modal } from "antd";
+} from "../../src/commons/types/generated/types";
+import { GlobalContext } from "../_app";
 
+const LOGIN_USER = gql`
+  mutation loginUser($email: String!, $password: String!) {
+    loginUser(email: $email, password: $password) {
+      accessToken
+    }
+  }
+`;
 const FETCH_USER_LOGGED_IN = gql`
   query fetchUserLoggedIn {
     fetchUserLoggedIn {
@@ -18,42 +23,38 @@ const FETCH_USER_LOGGED_IN = gql`
     }
   }
 `;
-export default function LoginComponentPage() {
+
+export default function LoginPage() {
+  const { setAccessToken, setUserInfo } = useContext(GlobalContext);
   const router = useRouter();
   const client = useApolloClient();
 
-  const { setAccessToken, setUserInfo } = useContext(GlobalContext);
-  const [getUserId, setGetUserId] = useState("");
-  const [getUserPassword, setGetUserPassword] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+  const [userPassword, setUserPassword] = useState("");
 
   const [loginUser] = useMutation<
     Pick<IMutation, "loginUser">, // Omit => 특정 데이터를 제외한 데이터를 전부 요청
     IMutationLoginUserArgs // Partial => 요청하는 데이터의 인자들의 뒤에 '?' 를 붙여서 불러오기
   >(LOGIN_USER);
 
-  const onChangeUserId = (e) => {
-    setGetUserId(e.target.value);
+  const onChangeUserEmail = (e: ChangeEvent<HTMLInputElement>) => {
+    setUserEmail(e.target.value);
   };
-  const onChangeUserPassword = (e) => {
-    setGetUserPassword(e.target.value);
+  const onChangeUserPassword = (e: ChangeEvent<HTMLInputElement>) => {
+    setUserPassword(e.target.value);
   };
-  const onPressEnter = (e) => {
-    if (e.key === "Enter") onClickLogin();
-  };
-
   const onClickLogin = async () => {
-    if (getUserId === "" || getUserPassword === "")
-      Modal.error({ content: "정보를 확인해주세요." });
-
     try {
+      //로그인 관련
       const result = await loginUser({
         variables: {
-          email: getUserId,
-          password: getUserPassword,
+          email: userEmail,
+          password: userPassword,
         },
       });
       const accessToken = result.data?.loginUser.accessToken || "";
 
+      //0216, 로그인한 유저 정보 받아오기
       const resultUserInfo = await client.query({
         query: FETCH_USER_LOGGED_IN,
         context: {
@@ -64,23 +65,25 @@ export default function LoginComponentPage() {
       //
       const userInfo = resultUserInfo.data.fetchUserLoggedIn;
 
+      // 글로벌 스테이트에 저장
       if (setAccessToken) setAccessToken(accessToken);
       if (setUserInfo) setUserInfo(userInfo);
 
+      // refreshToken 배우기 전까지 임시로 localStorage에 저장
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("userInfo", JSON.stringify(userInfo));
-      router.push(`/boards`);
+
+      router.push(`/23-05-login-check-success`);
     } catch (error) {
       if (error instanceof Error) Modal.error({ content: error.message });
     }
   };
 
   return (
-    <LoginComponentPageUI
-      onChangeUserId={onChangeUserId}
-      onChangeUserPassword={onChangeUserPassword}
-      onClickLogin={onClickLogin}
-      onPressEnter={onPressEnter}
-    />
+    <div>
+      이메일: <input type="text" onChange={onChangeUserEmail} />
+      비밀번호: <input type="password" onChange={onChangeUserPassword} />
+      <button onClick={onClickLogin}>Login</button>
+    </div>
   );
 }

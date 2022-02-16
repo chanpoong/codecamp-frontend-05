@@ -1,15 +1,15 @@
 import styled from "@emotion/styled";
 
 export const Board = styled.div`
-  width: 1200px;
+  width: 100%;
   height: auto;
-  top: 317px;
-  left: 360px;
+  /* top: 317px;
+  left: 360px; */
   /* bottom: 350px; */
 
-  padding: 50px;
-  margin-top: 100px;
-  margin-left: 100px;
+  padding: 25px;
+  /* margin-top: 100px;
+  margin-left: 100px; */
 
   background: #ffffff;
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);

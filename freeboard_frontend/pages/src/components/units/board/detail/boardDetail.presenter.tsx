@@ -9,12 +9,12 @@ export default function BoardDetailUI(props) {
     <div>
       <div>
         우편번호:
-        {props.data?.fetchBoard.boardAddress.zipcode || ""} <br />
+        {props.data?.fetchBoard.boardAddress?.zipcode || ""} <br />
         주소:
-        {props.data?.fetchBoard.boardAddress.address || ""}
+        {props.data?.fetchBoard.boardAddress?.address || ""}
         <br />
         상세주소:
-        {props.data?.fetchBoard.boardAddress.addressDetail || ""}
+        {props.data?.fetchBoard.boardAddress?.addressDetail || ""}
       </div>
     </div>
   );

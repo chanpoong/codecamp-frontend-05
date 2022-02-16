@@ -3,6 +3,8 @@ import {
   ApolloClient,
   InMemoryCache,
   ApolloProvider,
+  gql,
+  useQuery,
 } from "@apollo/client";
 import "antd/dist/antd.css";
 import Layout from "./src/components/commons/layout/index";
@@ -29,18 +31,30 @@ const firebaseConfig = {
 
 export const FirebaseApp = initializeApp(firebaseConfig);
 
+interface IUserInfo {
+  name?: string;
+  email?: string;
+  picture?: string;
+}
+
 interface IGlobalContext {
   accessToken?: string;
   setAccessToken?: Dispatch<SetStateAction<string>>;
+  userInfo?: IUserInfo;
+  setUserInfo?: Dispatch<SetStateAction<IUserInfo>>;
 }
 
 export const GlobalContext = createContext<IGlobalContext>({});
 
 function MyApp({ Component, pageProps }) {
   const [accessToken, setAccessToken] = useState("");
+  const [userInfo, setUserInfo] = useState<IUserInfo>({});
+
   const value = {
     accessToken,
     setAccessToken,
+    userInfo,
+    setUserInfo,
   };
 
   useEffect(() => {
