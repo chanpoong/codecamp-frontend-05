@@ -19,7 +19,11 @@ export default function ProductListPageUI(props) {
         </JH.ContentsLine>
         <JH.WrapperList>
           {props.data?.fetchUseditems?.map((el, index) => (
-            <JH.ContentsLine key={index}>
+            <JH.ContentsLine
+              key={index}
+              id={el._id}
+              onClick={props.onClickToProductDetail}
+            >
               <JH.itemText>{`${index + 1}`}</JH.itemText>
               <JH.itemText>{el.remarks}</JH.itemText>
               <JH.itemText>{el.name}</JH.itemText>

@@ -2,12 +2,14 @@ import { useMutation } from "@apollo/client";
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { GlobalContext } from "../../../../../_app";
-import { CREATE_USED_ITEM } from "./productWrite.queries";
+import { CREATE_USED_ITEM, UPDATE_USED_ITEM } from "./productWrite.queries";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from "next/router";
 import * as JH from "./productWrite.styles";
 import ProductWritePageUI from "./productWrite.presenter";
+import { IRegister, IVariables } from "./productWrite.types";
+import { Modal } from "antd";
 
 const schema = yup.object().shape({
   name: yup
@@ -24,21 +26,15 @@ const schema = yup.object().shape({
     .required("내용은 필수 입력 사항입니다."),
   remarks: yup.string().required("필수 입력 사항입니다."),
 });
-interface IRegister {
-  name?: string;
-  remarks?: string;
-  price?: number;
-  contents?: string;
-}
 
-export default function ProductWritePage() {
+export default function ProductWritePage(props) {
   const router = useRouter();
   const { register, handleSubmit, formState } = useForm({
-    mode: "onChange",
+    // mode: "onChange",
     resolver: yupResolver(schema),
   });
   const [createUseditem] = useMutation(CREATE_USED_ITEM);
-  const { userInfo, setUserInfo } = useContext(GlobalContext);
+  const [updateUseditem] = useMutation(UPDATE_USED_ITEM);
 
   const submitProduct = async (input: IRegister) => {
     const result = await createUseditem({
@@ -54,13 +50,39 @@ export default function ProductWritePage() {
 
     router.push("/products");
   };
+  const EditProduct = async (input: IRegister) => {
+    console.log(input);
+    try {
+      const variables: IVariables = {};
+
+      if (input.name) variables.name = input.name;
+      if (input.remarks) variables.remarks = input.remarks;
+      if (input.contents) variables.contents = input.contents;
+      if (input.price) variables.price = input.price;
+      if (input.images) variables.images = input.images;
+
+      await updateUseditem({
+        variables: {
+          useditemId: String(router.query.detail),
+          updateUseditemInput: variables,
+        },
+      });
+
+      Modal.success({
+        content: `게시물 ${props.isEdit ? "수정" : "등록"}이 완료되었습니다`,
+      });
+    } catch (error) {}
+  };
 
   return (
     <ProductWritePageUI
+      data={props.data}
+      isEdit={props.isEdit}
       handleSubmit={handleSubmit}
       submitProduct={submitProduct}
       register={register}
       formState={formState}
+      EditProduct={EditProduct}
     />
   );
 }

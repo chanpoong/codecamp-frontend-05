@@ -2,15 +2,14 @@ import styled from "@emotion/styled";
 import { LikeOutlined, DislikeOutlined } from "@ant-design/icons";
 
 export const Wrapper = styled.div`
-  width: 1200px;
-  height: auto;
+  width: 100%;
+  height: 100%;
   top: 317px;
   left: 360px;
   /* bottom: 350px; */
 
   padding: 50px;
-  margin-top: 100px;
-  margin-left: 100px;
+
   display: flex;
   flex-direction: column;
   align-items: center;

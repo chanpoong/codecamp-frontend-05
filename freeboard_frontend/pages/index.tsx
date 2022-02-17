@@ -2,6 +2,7 @@ import { keyframes, css } from "@emotion/react";
 import styled from "@emotion/styled";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import { UseMoveToPage } from "./src/components/commons/hooks/useMoveToPage";
 
 const Wrapper = styled.div`
   width: 100%;

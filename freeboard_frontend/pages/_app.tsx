@@ -42,6 +42,8 @@ interface IGlobalContext {
   setAccessToken?: Dispatch<SetStateAction<string>>;
   userInfo?: IUserInfo;
   setUserInfo?: Dispatch<SetStateAction<IUserInfo>>;
+  isEdit?: boolean;
+  setIsEdit?: Dispatch<SetStateAction<boolean>>;
 }
 
 export const GlobalContext = createContext<IGlobalContext>({});
@@ -49,12 +51,14 @@ export const GlobalContext = createContext<IGlobalContext>({});
 function MyApp({ Component, pageProps }) {
   const [accessToken, setAccessToken] = useState("");
   const [userInfo, setUserInfo] = useState<IUserInfo>({});
-
+  const [isEdit, setIsEdit] = useState(false);
   const value = {
     accessToken,
     setAccessToken,
     userInfo,
     setUserInfo,
+    isEdit,
+    setIsEdit,
   };
 
   useEffect(() => {
