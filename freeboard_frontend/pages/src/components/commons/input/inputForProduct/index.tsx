@@ -8,7 +8,7 @@ export default function InputForProduct(props) {
     <ForProduct
       type={props.type}
       {...props.register}
-      defaultValue={props.aaa}
+      defaultValue={props.defaultValue}
     />
   );
 }

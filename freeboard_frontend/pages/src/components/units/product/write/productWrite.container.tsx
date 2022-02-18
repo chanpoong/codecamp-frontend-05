@@ -1,5 +1,5 @@
 import { useMutation } from "@apollo/client";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { GlobalContext } from "../../../../../_app";
 import { CREATE_USED_ITEM, UPDATE_USED_ITEM } from "./productWrite.queries";
@@ -8,7 +8,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from "next/router";
 import * as JH from "./productWrite.styles";
 import ProductWritePageUI from "./productWrite.presenter";
-import { IRegister, IVariables } from "./productWrite.types";
+import { IRegister, IVariables, IFormValues } from "./productWrite.types";
 import { Modal } from "antd";
 
 const schema = yup.object().shape({
@@ -29,10 +29,21 @@ const schema = yup.object().shape({
 
 export default function ProductWritePage(props) {
   const router = useRouter();
-  const { register, handleSubmit, formState } = useForm({
-    // mode: "onChange",
-    resolver: yupResolver(schema),
-  });
+  const { register, handleSubmit, formState, watch, setValue } =
+    useForm<IFormValues>({
+      mode: "onSubmit",
+      resolver: yupResolver(schema),
+      defaultValues: {},
+    });
+
+  useEffect(() => {
+    setValue("name", props.data?.fetchUseditem.name);
+    setValue("remarks", props.data?.fetchUseditem.remarks);
+    setValue("contents", props.data?.fetchUseditem.contents);
+    setValue("price", props.data?.fetchUseditem.price);
+    setValue("images", props.data?.fetchUseditem.images);
+  }, [props.data]);
+
   const [createUseditem] = useMutation(CREATE_USED_ITEM);
   const [updateUseditem] = useMutation(UPDATE_USED_ITEM);
 
@@ -51,7 +62,6 @@ export default function ProductWritePage(props) {
     router.push("/products");
   };
   const EditProduct = async (input: IRegister) => {
-    console.log(input);
     try {
       const variables: IVariables = {};
 
@@ -71,6 +81,7 @@ export default function ProductWritePage(props) {
       Modal.success({
         content: `게시물 ${props.isEdit ? "수정" : "등록"}이 완료되었습니다`,
       });
+      router.push("/products");
     } catch (error) {}
   };
 

@@ -19,42 +19,39 @@ export default function ProductWritePageUI(props) {
         <InputForProduct
           type="text"
           register={props.register("name")}
-          aaa={props.isEdit ? props.data?.fetchUseditem.name : ""}
+          defaultValue={props.isEdit ? props.data?.fetchUseditem.name : ""}
         />
         <JH.ErrorMessage>
           {props.formState.errors?.name?.message}
         </JH.ErrorMessage>
-
         <JH.BoxTitle>상품명</JH.BoxTitle>
         <InputForProduct
           type="text"
           register={props.register("remarks")}
-          aaa={props.isEdit ? props.data?.fetchUseditem.remarks : ""}
+          defaultValue={props.isEdit ? props.data?.fetchUseditem.remarks : ""}
         />
         <JH.ErrorMessage>
           {props.formState.errors?.remarks?.message}
         </JH.ErrorMessage>
-
         <JH.BoxTitle>가격 </JH.BoxTitle>
         <InputForProduct
-          type="number"
+          type="text"
           register={props.register("price")}
-          aaa={props.isEdit ? props.data?.fetchUseditem.price : ""}
+          defaultValue={props.isEdit ? props.data?.fetchUseditem.price : 0}
         />
         <JH.ErrorMessage>
           {props.formState.errors?.price?.message}
         </JH.ErrorMessage>
-
         <JH.BoxTitle>내용 </JH.BoxTitle>
         <InputForProduct
           type="text"
           register={props.register("contents")}
-          aaa={props.isEdit ? props.data?.fetchUseditem.contents : ""}
+          defaultValue={props.isEdit ? props.data?.fetchUseditem.contents : ""}
         />
+        )
         <JH.ErrorMessage>
           {props.formState.errors?.contents?.message}
         </JH.ErrorMessage>
-
         <button>등록</button>
       </form>
     </JH.Wrapper>

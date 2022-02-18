@@ -14,4 +14,14 @@ export interface IVariables {
   contents?: string;
   title?: string;
   images?: [string];
+  input?: { any };
+}
+
+export interface IFormValues {
+  name?: string;
+  remarks?: string;
+  price?: number;
+  contents?: string;
+  title?: string;
+  images?: [string];
 }
