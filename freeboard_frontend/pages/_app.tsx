@@ -40,10 +40,13 @@ interface IUserInfo {
 interface IGlobalContext {
   accessToken?: string;
   setAccessToken?: Dispatch<SetStateAction<string>>;
-  userInfo?: IUserInfo;
+  userInfo?: string;
   setUserInfo?: Dispatch<SetStateAction<IUserInfo>>;
   isEdit?: boolean;
   setIsEdit?: Dispatch<SetStateAction<boolean>>;
+  server?: string;
+  setServer?: Dispatch<SetStateAction<string>>;
+  onChangeSelectServer?: () => void;
 }
 
 export const GlobalContext = createContext<IGlobalContext>({});
@@ -52,21 +55,19 @@ function MyApp({ Component, pageProps }) {
   const [accessToken, setAccessToken] = useState("");
   const [userInfo, setUserInfo] = useState<IUserInfo>({});
   const [isEdit, setIsEdit] = useState(false);
-  const value = {
-    accessToken,
-    setAccessToken,
-    userInfo,
-    setUserInfo,
-    isEdit,
-    setIsEdit,
-  };
+  const [server, setServer] = useState("");
 
   useEffect(() => {
     if (localStorage.getItem("accessToken")) {
       setAccessToken(localStorage.getItem("accessToken"));
     }
+    if (localStorage.getItem("userInfo")) {
+      setUserInfo(localStorage.getItem("userInfo"));
+    }
   }, []);
-
+  const onChangeSelectServer = (e) => {
+    setServer(e.target.value);
+  };
   const uploadLink = createUploadLink({
     uri: "http://backend05.codebootcamp.co.kr/graphql",
     headers: { Authorization: `Bearer ${accessToken}` },
@@ -78,6 +79,17 @@ function MyApp({ Component, pageProps }) {
     //API 참조를 위한 주소는 uri에 작성
     cache: new InMemoryCache(),
   });
+  const value = {
+    accessToken,
+    setAccessToken,
+    userInfo,
+    setUserInfo,
+    isEdit,
+    setIsEdit,
+    onChangeSelectServer,
+    server,
+    setServer,
+  };
 
   return (
     <GlobalContext.Provider value={value}>

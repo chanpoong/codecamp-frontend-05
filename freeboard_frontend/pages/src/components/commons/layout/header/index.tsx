@@ -1,7 +1,7 @@
 import { gql, useMutation, useQuery } from "@apollo/client";
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 import { IQuery } from "../../../../../../src/commons/types/generated/types";
 import { GlobalContext } from "../../../../../_app";
@@ -40,8 +40,13 @@ const LoggedinUserName = styled.div`
 const FETCH_USER_LOGGED_IN = gql`
   query fetchUserLoggedIn {
     fetchUserLoggedIn {
+      _id
       email
       name
+      userPoint {
+        _id
+        amount
+      }
     }
   }
 `;
@@ -59,11 +64,15 @@ export default function LayoutHeader() {
 
   const { data } =
     useQuery<Pick<IQuery, "fetchUserLoggedIn">>(FETCH_USER_LOGGED_IN);
+
   const onClickToLogin = () => {
     router.push("/login");
   };
   const onClickToHome = () => {
     router.push("/");
+  };
+  const onClickToMyPage = () => {
+    router.push("/mypage");
   };
 
   const onClickLogOut = () => {
@@ -90,6 +99,10 @@ export default function LayoutHeader() {
       {data?.fetchUserLoggedIn ? (
         <div>
           <LoggedinUserName>{`${data?.fetchUserLoggedIn?.name} 님 환영합니다`}</LoggedinUserName>
+          <div
+            style={{ color: "white" }}
+          >{`point: ${data?.fetchUserLoggedIn?.userPoint.amount}`}</div>
+          <LoginButton onClick={onClickToMyPage}>Mypage </LoginButton>
           <LoginButton onClick={onClickLogOut}>Logout </LoginButton>
         </div>
       ) : (

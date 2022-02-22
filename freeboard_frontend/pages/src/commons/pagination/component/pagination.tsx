@@ -71,7 +71,6 @@ const PageIndex = styled.span`
 `;
 
 export default function Pagination(props) {
-  const [currentPage, setCurrentPage] = useState(1);
   const [changeIndexColor, setChangeIndexColor] = useState(1);
 
   const onClickPage = (event: MouseEvent<HTMLSpanElement>) => {

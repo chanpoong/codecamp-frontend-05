@@ -4,7 +4,7 @@ export interface IRegister {
   price?: number;
   contents?: string;
   title?: string;
-  images?: [string];
+  images?: string[];
 }
 
 export interface IVariables {
@@ -13,7 +13,7 @@ export interface IVariables {
   price?: number;
   contents?: string;
   title?: string;
-  images?: [string];
+  images?: string[];
   input?: { any };
 }
 
@@ -23,5 +23,5 @@ export interface IFormValues {
   price?: number;
   contents?: string;
   title?: string;
-  images?: [string];
+  images?: string[];
 }

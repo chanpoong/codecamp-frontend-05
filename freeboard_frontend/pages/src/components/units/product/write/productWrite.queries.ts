@@ -8,6 +8,7 @@ export const CREATE_USED_ITEM = gql`
       price
       remarks
       contents
+      images
       seller {
         name
       }

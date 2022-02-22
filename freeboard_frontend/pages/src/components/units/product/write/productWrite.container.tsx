@@ -1,5 +1,5 @@
 import { useMutation } from "@apollo/client";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { GlobalContext } from "../../../../../_app";
 import { CREATE_USED_ITEM, UPDATE_USED_ITEM } from "./productWrite.queries";
@@ -29,20 +29,13 @@ const schema = yup.object().shape({
 
 export default function ProductWritePage(props) {
   const router = useRouter();
-  const { register, handleSubmit, formState, watch, setValue } =
-    useForm<IFormValues>({
-      mode: "onSubmit",
-      resolver: yupResolver(schema),
-      defaultValues: {},
-    });
+  const [images, setImages] = useState(["", "", ""]);
 
-  useEffect(() => {
-    setValue("name", props.data?.fetchUseditem.name);
-    setValue("remarks", props.data?.fetchUseditem.remarks);
-    setValue("contents", props.data?.fetchUseditem.contents);
-    setValue("price", props.data?.fetchUseditem.price);
-    setValue("images", props.data?.fetchUseditem.images);
-  }, [props.data]);
+  const { register, handleSubmit, formState, setValue } = useForm<IFormValues>({
+    mode: "onChange",
+    resolver: yupResolver(schema),
+    defaultValues: {},
+  });
 
   const [createUseditem] = useMutation(CREATE_USED_ITEM);
   const [updateUseditem] = useMutation(UPDATE_USED_ITEM);
@@ -55,10 +48,10 @@ export default function ProductWritePage(props) {
           remarks: input.remarks,
           contents: input.contents,
           price: Number(input.price),
+          images,
         },
       },
     });
-
     router.push("/products");
   };
   const EditProduct = async (input: IRegister) => {
@@ -69,7 +62,7 @@ export default function ProductWritePage(props) {
       if (input.remarks) variables.remarks = input.remarks;
       if (input.contents) variables.contents = input.contents;
       if (input.price) variables.price = input.price;
-      if (input.images) variables.images = input.images;
+      if (images) variables.images = images;
 
       await updateUseditem({
         variables: {
@@ -82,8 +75,20 @@ export default function ProductWritePage(props) {
         content: `게시물 ${props.isEdit ? "수정" : "등록"}이 완료되었습니다`,
       });
       router.push("/products");
-    } catch (error) {}
+    } catch (error) {
+      Modal.error({ content: `${error.message}` });
+    }
   };
+
+  useEffect(() => {
+    if (props.data?.fetchUseditems?.images?.length) {
+      setImages([props.data?.fetchUseditems?.images]);
+    }
+    setValue("name", props.data?.fetchUseditem.name);
+    setValue("remarks", props.data?.fetchUseditem.remarks);
+    setValue("contents", props.data?.fetchUseditem.contents);
+    setValue("price", props.data?.fetchUseditem.price);
+  }, [props.data]);
 
   return (
     <ProductWritePageUI
@@ -94,6 +99,8 @@ export default function ProductWritePage(props) {
       register={register}
       formState={formState}
       EditProduct={EditProduct}
+      setImages={setImages}
+      images={images}
     />
   );
 }

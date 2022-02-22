@@ -1,7 +1,12 @@
-import ButtonForProduct from "../../../commons/button/buttonForProduct/buttonForProduct";
+import { useContext } from "react";
+import { GlobalContext } from "../../../../../_app";
+import ShowImagesInCarouselPage from "../../../../commons/showImages/Carousel";
+import ButtonForProduct from "../../../../commons/button/buttonForProduct/buttonForProduct";
+import ProductCommentList from "../../../commons/comments/product/productCommentList/productCommentList.container";
 import * as JH from "./productDetail.styles";
 
 export default function ProductDetailPageUI(props) {
+  const { server } = useContext(GlobalContext);
   return (
     <JH.Wrapper>
       <JH.WrapperTitle>팝니다</JH.WrapperTitle>
@@ -9,6 +14,8 @@ export default function ProductDetailPageUI(props) {
         <JH.TitleWrapper>
           <JH.Title>상품명:</JH.Title>
           <JH.TitleData>{props.data?.fetchUseditem.remarks}</JH.TitleData>
+          <span>서버</span>
+          <span>{server}</span>
         </JH.TitleWrapper>
         <JH.ProductInfoWrapper>
           <JH.Seller>판매자:</JH.Seller>
@@ -20,6 +27,13 @@ export default function ProductDetailPageUI(props) {
 
         <JH.ContentsWrapper>
           <JH.ContentsTitle>내용</JH.ContentsTitle>
+          <JH.ImageCarouselWrapper>
+            <ShowImagesInCarouselPage
+              src={`https://storage.googleapis.com/`}
+              data={props.data}
+            />
+          </JH.ImageCarouselWrapper>
+
           <JH.ContentsData>
             {props.data?.fetchUseditem.contents}
           </JH.ContentsData>
@@ -40,6 +54,7 @@ export default function ProductDetailPageUI(props) {
             name="삭제하기"
           />
         </JH.ButtonWrapper>
+        <ProductCommentList />
       </JH.InnerWrapper>
     </JH.Wrapper>
   );

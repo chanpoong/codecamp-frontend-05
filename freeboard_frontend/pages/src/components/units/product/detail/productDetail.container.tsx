@@ -1,4 +1,5 @@
 import { useMutation, useQuery } from "@apollo/client";
+import { Modal } from "antd";
 import { Router, useRouter } from "next/router";
 import { UseMoveToPage } from "../../../commons/hooks/useMoveToPage";
 import ProductDetailPageUI from "./productDetail.presenter";
@@ -12,14 +13,14 @@ export default function ProductDetailPage() {
     variables: { useditemId: String(router.query.detail) },
   });
   const [deleteUseditem] = useMutation(DELETE_USED_ITEM);
-
+  console.log(data);
   const onClickDeleteProduct = async () => {
     await deleteUseditem({
       variables: {
         useditemId: String(router.query.detail),
       },
     });
-    router.push("/products");
+    moveToPage("/products");
   };
 
   return (

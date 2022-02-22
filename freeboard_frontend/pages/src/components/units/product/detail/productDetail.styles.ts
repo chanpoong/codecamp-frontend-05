@@ -3,10 +3,6 @@ import styled from "@emotion/styled";
 export const Wrapper = styled.div`
   width: 100%;
   height: 100%;
-  top: 317px;
-  left: 360px;
-  bottom: 350px;
-
   padding: 30px;
 
   background: #ffffff;
@@ -18,7 +14,7 @@ export const WrapperTitle = styled.span`
   padding-bottom: 10px;
 `;
 export const InnerWrapper = styled.div`
-  width: 100%;
+  width: calc(100vw - 316px);
   height: 95%;
 
   display: flex;
@@ -88,6 +84,20 @@ export const ContentsTitle = styled.span`
   min-width: 50px;
   padding: 10px 10px 0px 10px;
   font-weight: bold;
+`;
+export const ImageCarouselWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  .ant-carousel {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+  .ant-carousel .slick-dots {
+    margin: 0 !important;
+    position: relative !important;
+  }
 `;
 export const ContentsData = styled.span`
   width: 100%;

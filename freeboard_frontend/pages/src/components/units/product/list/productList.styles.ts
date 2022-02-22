@@ -23,6 +23,10 @@ export const WrapperHeader = styled.div`
   border-bottom: 1px solid black;
   padding-bottom: 20px;
 `;
+export const SearchBarWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
 
 export const HeaderTitle = styled.h1`
   width: 100%;
@@ -32,6 +36,7 @@ export const HeaderTitle = styled.h1`
 `;
 export const HeaderSearch = styled.div`
   width: 100%;
+  height: 50px;
 
   display: flex;
   flex-direction: row;
@@ -74,6 +79,9 @@ export const ContentsLine = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  :hover {
+    color: blue;
+  }
 `;
 
 export const WrapperList = styled.div`
@@ -90,4 +98,21 @@ export const itemText = styled.div`
   text-align: center;
 
   overflow: hidden;
+`;
+export const WrapperFooter = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  align-items: center;
+
+  padding: 10px;
+`;
+
+export const SearchedWord = styled.span`
+  background-color: ${(props: any) => (props.isMatched ? "#e6a5b5" : "none")};
+  border-radius: 3px;
+  opacity: 0.9;
+  /* background-color: #e6a5b5;
+  border-radius: 5px;
+  opacity: 0.9; */
 `;
