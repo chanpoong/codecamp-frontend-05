@@ -6,6 +6,6 @@ export const CommentWrapper = styled.div`
   display: flex;
   flex-direction: row;
 `;
-export const CommentContentInput = styled.input`
+export const CommentContentInput = styled.textarea`
   width: 100%;
 `;

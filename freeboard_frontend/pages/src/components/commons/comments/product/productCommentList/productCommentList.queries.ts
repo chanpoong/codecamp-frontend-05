@@ -23,22 +23,19 @@ export const DELETE_USED_ITEM_QUESTION = gql`
 `;
 
 //상품 댓글 수정
-export const UPDATE_USED_ITEM_QUESTION = gql`
-  mutation updateUseditemQuestion(
-    $updateUseditemQuestionInput: UpdateUseditemQuestionInput!
-    $useditemQuestionId: ID!
-  ) {
-    updateUseditemQuestion(
-      updateUseditemQuestionInput: $updateUseditemQuestionInput
+
+export const FETCH_USED_ITEM_QUESTION_ANSWERS = gql`
+  query fetchUseditemQuestionAnswers($page: Int, $useditemQuestionId: ID!) {
+    fetchUseditemQuestionAnswers(
+      page: $page
       useditemQuestionId: $useditemQuestionId
     ) {
       _id
       contents
       user {
-        _id
         name
       }
-      updatedAt
+      createdAt
     }
   }
 `;

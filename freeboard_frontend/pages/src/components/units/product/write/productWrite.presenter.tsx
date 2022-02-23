@@ -19,7 +19,7 @@ export default function ProductWritePageUI(props) {
             : props.handleSubmit(props.submitProduct)
         }
       >
-        <JH.BoxTitle>판매자 </JH.BoxTitle>
+        <JH.BoxTitle>제목 </JH.BoxTitle>
         <InputForProduct
           type="text"
           register={props.register("name")}
@@ -44,7 +44,7 @@ export default function ProductWritePageUI(props) {
             <option>니나브</option>
           </select>
         </div>
-        <JH.BoxTitle>상품명</JH.BoxTitle>
+        <JH.BoxTitle>한줄요약</JH.BoxTitle>
         <InputForProduct
           type="text"
           register={props.register("remarks")}

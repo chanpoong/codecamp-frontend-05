@@ -4,6 +4,7 @@ import { Button, Card } from "antd";
 import { SearchOutlined, EditOutlined } from "@ant-design/icons";
 import InfiniteScroll from "react-infinite-scroller";
 import { v4 as uuidv4 } from "uuid";
+import { DateToString } from "../../../../commons/libraries/utils";
 
 export default function ProductListPageUI(props) {
   const { Meta } = Card;
@@ -15,7 +16,7 @@ export default function ProductListPageUI(props) {
           {props.openSearchBar ? (
             <JH.SearchBarWrapper>
               <JH.SearchBar
-                placeholder="판매자 명"
+                placeholder="Search"
                 onChange={props.onChangeSearch}
               />
             </JH.SearchBarWrapper>
@@ -36,9 +37,10 @@ export default function ProductListPageUI(props) {
       <JH.WrapperBody>
         <JH.ContentsLine>
           <JH.itemText> No.</JH.itemText>
-          <JH.itemText>상품명</JH.itemText>
+          <JH.itemText>제목</JH.itemText>
           <JH.itemText>판매자</JH.itemText>
           <JH.itemText>가격</JH.itemText>
+          <JH.itemText>작성일</JH.itemText>
         </JH.ContentsLine>
         <JH.WrapperList>
           <InfiniteScroll
@@ -57,7 +59,7 @@ export default function ProductListPageUI(props) {
                   title={el.remarks}
                   description={el.name}></Meta> */}
                 <JH.itemText>{`${index + 1}`}</JH.itemText>
-                <JH.itemText>{el.remarks}</JH.itemText>
+
                 <JH.itemText>
                   {el.name
                     .replaceAll(props.keyword, `!@#${props.keyword}!@#`)
@@ -71,8 +73,9 @@ export default function ProductListPageUI(props) {
                       </JH.SearchedWord>
                     ))}
                 </JH.itemText>
+                <JH.itemText>{el.seller.name}</JH.itemText>
                 <JH.itemText>{el.price}</JH.itemText>
-
+                <JH.itemText>{DateToString(el.createdAt)}</JH.itemText>
                 {/* </Card> */}
               </JH.ContentsLine>
             ))}

@@ -19,7 +19,10 @@ export const CommentTitleWrapper = styled.div`
   align-items: center;
 `;
 
-export const CommentButtonWrapper = styled.div``;
+export const CommentButtonWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
 export const CommentWriter = styled.div`
   font-weight: bold;
   padding: 3px;

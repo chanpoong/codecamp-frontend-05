@@ -63,22 +63,17 @@ export default function PaymentPage() {
   };
 
   const onClickPayment = () => {
-    const IMP = window.IMP; // 생략 가능
-    IMP.init("imp49910675"); // Example: imp00000000
-    // IMP.request_pay(param, callback) 결제창 호출
+    const IMP = window.IMP;
+    IMP.init("imp49910675");
     IMP.request_pay(
       {
         // param
         pg: "html5_inicis",
         pay_method: "card",
-        // merchant_uid: "ORD20180131-0000011",
         name: "포인트 충전",
         amount,
         buyer_email: data?.fetchUserLoggedIn?.email,
         buyer_name: data?.fetchUserLoggedIn?.name,
-        // buyer_tel: "010-4242-4242",
-        // buyer_addr: "서울특별시 강남구 신사동",
-        // buyer_postcode: "01181",
         //m_redirect_url: ,  << 모바일 웹에서 결제 후 돌아갈 주소
       },
       (rsp) => {
@@ -113,6 +108,9 @@ export default function PaymentPage() {
           <option>100</option>
           <option>200</option>
           <option>300</option>
+          <option>3000</option>
+          <option>5000</option>
+          <option>10000</option>
         </select>
         <button onClick={onClickPayment}>결제</button>
       </div>

@@ -32,7 +32,7 @@ export default function ProductCommentQuestionPage(props) {
   return (
     <JH.CommentWrapper>
       <JH.CommentContentInput
-        type="textarea"
+        type="textArea"
         onChange={onChangeCommentContents}
       />
       <ButtonForProduct name="댓글 등록" onClick={onClickSubmitComment} />

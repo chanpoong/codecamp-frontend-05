@@ -23,6 +23,7 @@ import {
   useEffect,
 } from "react";
 import { AppProps } from "next/app";
+import Head from "next/head"
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -95,6 +96,10 @@ function MyApp({ Component, pageProps }: AppProps) {
   }); //
 
   return (
+    <div>
+    {/* <Head> 모든 페이지에서 head 내부의 데이터를 다운로드 받아서 로딩 시간에 관련한 에러 등은 방지할 수 있는데  비효율적
+               <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b01d65e21d48e9aeaf9d190e4949e5e0"></script>
+            </Head> */}
     <GlobalContext.Provider value={value}>
       <ApolloProvider client={client}>
         <Global styles={GlobalStyles} />
@@ -103,6 +108,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         </Layout>
       </ApolloProvider>
     </GlobalContext.Provider>
+    </div>
   );
 }
 

@@ -44,10 +44,10 @@ export default function ProductWritePage(props) {
     const result = await createUseditem({
       variables: {
         createUseditemInput: {
-          name: input.name,
-          remarks: input.remarks,
-          contents: input.contents,
-          price: Number(input.price),
+          name: input.name, //상품명
+          remarks: input.remarks, //한줄 요약
+          contents: input.contents, //내용
+          price: Number(input.price), //가격
           images,
         },
       },
