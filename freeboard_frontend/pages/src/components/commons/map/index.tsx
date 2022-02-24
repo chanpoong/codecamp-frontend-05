@@ -12,7 +12,7 @@ export default function KakaoMapPage() {
     //맵에 관련한 데이터를 이 부분에서 직접 다운로드하고 다운로드 완료 전에는 실행되지 않게 설정
     const script = document.createElement("script"); //스크립트 태그를 직접 생성
     script.src =
-      "//dapi.kakao.com/v2/maps/sdk.js?appkey=b01d65e21d48e9aeaf9d190e4949e5e0&autoload=false"; //직접 만든 스크립트 태그의 src설정
+      "//dapi.kakao.com/v2/maps/sdk.js?appkey=b01d65e21d48e9aeaf9d190e4949e5e0&autoload=false&libraries=services"; //직접 만든 스크립트 태그의 src설정
     document.head.appendChild(script); // HTML문서의 헤드 태그에 자식노드로 직접 생성한 스크립트를 푸쉬
 
     //스크립트 로드가 완료되면 중괄호 내부의 코드를 실행
@@ -59,6 +59,7 @@ export default function KakaoMapPage() {
           }
         );
         const geocoder = new window.kakao.maps.services.Geocoder();
+
         geocoder.addressSearch(
           "제주특별자치도 제주시 첨단로 242",
           function (result, status) {

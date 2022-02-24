@@ -1,13 +1,13 @@
 import ButtonForProduct from "../../../../commons/button/buttonForProduct/buttonForProduct";
 import * as JH from "./productList.styles";
-import { Button, Card } from "antd";
+import { Button, Card, Popover } from "antd";
 import { SearchOutlined, EditOutlined } from "@ant-design/icons";
 import InfiniteScroll from "react-infinite-scroller";
 import { v4 as uuidv4 } from "uuid";
 import { DateToString } from "../../../../commons/libraries/utils";
+import ProductListHoverPage from "./protductList.hover";
 
 export default function ProductListPageUI(props) {
-  const { Meta } = Card;
   return (
     <JH.Wrapper>
       <JH.WrapperHeader>
@@ -49,35 +49,37 @@ export default function ProductListPageUI(props) {
             hasMore={false || true}
           >
             {props.data?.fetchUseditems.map((el, index) => (
-              <JH.ContentsLine
+              <Popover
+                content={<ProductListHoverPage el={el} />}
+                title="preview"
                 key={index}
-                id={el._id}
-                onClick={props.onClickToProductDetail}
               >
-                {/* <Card>
-                  <Meta
-                  title={el.remarks}
-                  description={el.name}></Meta> */}
-                <JH.itemText>{`${index + 1}`}</JH.itemText>
+                {console.log(el.images)}
+                <JH.ContentsLine
+                  key={index}
+                  id={el._id}
+                  onClick={props.onClickToProductDetail}
+                >
+                  <JH.itemText>{`${index + 1}`}</JH.itemText>
 
-                <JH.itemText>
-                  {el.name
-                    .replaceAll(props.keyword, `!@#${props.keyword}!@#`)
-                    .split("!@#")
-                    .map((el) => (
-                      <JH.SearchedWord
-                        key={uuidv4}
-                        isMatched={el === props.keyword}
-                      >
-                        {el}
-                      </JH.SearchedWord>
-                    ))}
-                </JH.itemText>
-                <JH.itemText>{el.seller.name}</JH.itemText>
-                <JH.itemText>{el.price}</JH.itemText>
-                <JH.itemText>{DateToString(el.createdAt)}</JH.itemText>
-                {/* </Card> */}
-              </JH.ContentsLine>
+                  <JH.itemText>
+                    {el.name
+                      .replaceAll(props.keyword, `!@#${props.keyword}!@#`)
+                      .split("!@#")
+                      .map((el) => (
+                        <JH.SearchedWord
+                          key={uuidv4}
+                          isMatched={el === props.keyword}
+                        >
+                          {el}
+                        </JH.SearchedWord>
+                      ))}
+                  </JH.itemText>
+                  <JH.itemText>{el.seller.name}</JH.itemText>
+                  <JH.itemText>{el.price}</JH.itemText>
+                  <JH.itemText>{DateToString(el.createdAt)}</JH.itemText>
+                </JH.ContentsLine>
+              </Popover>
             ))}
           </InfiniteScroll>
         </JH.WrapperList>

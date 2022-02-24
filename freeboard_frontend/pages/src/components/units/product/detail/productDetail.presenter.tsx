@@ -38,7 +38,12 @@ export default function ProductDetailPageUI(props) {
             {props.data?.fetchUseditem.contents}
           </JH.ContentsData>
         </JH.ContentsWrapper>
+
         <JH.ButtonWrapper>
+          <ButtonForProduct
+            onClick={props.buyProduct}
+            name="구매하기"
+          ></ButtonForProduct>
           <ButtonForProduct
             onClick={props.moveToPage(`/products`)}
             name="목록으로"

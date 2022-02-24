@@ -75,15 +75,19 @@ export default function LayoutHeader() {
     router.push("/mypage");
   };
 
+  // const onClickLogOut12 = () => {
+  //   if (setAccessToken) {
+  //     // setAccessToken("");
+  //     // localStorage.setItem("accessToken", "");
+  //     localStorage.removeItem("accessToken");
+  //     localStorage.removeItem("userInfo");
+  //     // router.push("/");
+  //     window.location.replace("/");
+  //   }
+  // };
   const onClickLogOut = () => {
-    if (setAccessToken) {
-      // setAccessToken("");
-      // localStorage.setItem("accessToken", "");
-      localStorage.removeItem("accessToken");
-      localStorage.removeItem("userInfo");
-      // router.push("/");
-      window.location.replace("/");
-    }
+    logoutUser();
+    window.location.replace("/");
   };
 
   const onClickSignup = () => {

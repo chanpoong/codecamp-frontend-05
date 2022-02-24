@@ -18,7 +18,7 @@ const schema = yup.object().shape({
     .required("이름은 필수 입력 사항입니다."),
   price: yup
     .number()
-    .moreThan(5000, "5000원 이상의 값을 입력해주세요")
+    .moreThan(100, "100원 이상의 값을 입력해주세요")
     .required("가격은 필수 입력 사항입니다."),
   contents: yup
     .string()

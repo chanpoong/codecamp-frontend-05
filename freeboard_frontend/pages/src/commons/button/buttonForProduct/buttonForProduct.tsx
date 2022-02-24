@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { withAuth } from "../../../components/commons/hocs/withAuth";
 
 const ForProduct = styled.button`
   border: none;

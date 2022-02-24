@@ -23,7 +23,9 @@ import {
   useEffect,
 } from "react";
 import { AppProps } from "next/app";
-import Head from "next/head"
+import {onError} from '@apollo/client/link/error'
+import { getAccessToken } from "../src/commons/libraries/getAccessToken";
+
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -78,19 +80,52 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   // 나머지 컴포넌트가 전부 그려지고 난 후 실행되게하는 명령어인 useEffect를 사용해서 pre-rendering에서 오류나지 않게 설정
   useEffect(() => {
-    if (localStorage.getItem("accessToken")) {
-      setAccessToken(localStorage.getItem("accessToken"));
-    }
+    // if (localStorage.getItem("accessToken")) {
+    //   setAccessToken(localStorage.getItem("accessToken"));
+    // }
+    getAccessToken().then((newAccessToken)=>{
+      setAccessToken(newAccessToken)
+    })
   }, []);
 
+
+  
+
+
+    //에러 발생시 실행할 프로세스 설정
+  const errorLink= onError(({graphQLErrors, operation, forward})=>{
+    // 1. 에러 캐치
+    if(graphQLErrors) {
+      for (const error of graphQLErrors) {
+        // 2. 토큰 만료 에러 여부 체크
+        if(error.extensions.code === 'UNAUTHENTICATED'){
+          // 3. refreshToken으로 토큰 재발급
+          getAccessToken().then(newAccessToken => {
+            // 4. 재발급 받은 accessToken 저장
+            setAccessToken(newAccessToken)
+            // 5. 저장된 토큰으로 실패한 쿼리 재요청
+            operation.setContext({  //설정 변경, 기존 인자는 두고 토큰만 새걸로 바꾸기
+            headers: {
+              ...operation.getContext().headers,
+              Authorization: `Bearer ${newAccessToken}`
+            }
+            }) 
+          })
+         return forward(operation) // 변경된 operation으로 재요청
+        }
+      }
+    }
+  })
+
   const uploadLink = createUploadLink({
-    uri: "http://backend05.codebootcamp.co.kr/graphql",
+    uri: "https://backend05.codebootcamp.co.kr/graphql",
     headers: { Authorization: `Bearer ${accessToken}` },
+    credentials: 'include',
   });
 
   const client = new ApolloClient({
     // uploadLink의 타입은 uploadLink as unknown as ApolloLink
-    link: ApolloLink.from([uploadLink as unknown as ApolloLink]),
+    link: ApolloLink.from([errorLink, uploadLink as unknown as ApolloLink]),
     //API 참조를 위한 주소는 uri에 작성
     cache: new InMemoryCache(),
   }); //

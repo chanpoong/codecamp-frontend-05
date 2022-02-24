@@ -1,3 +1,4 @@
+import KakaoMapPage from "../../../src/components/commons/map";
 import * as S from "./attackBoardList.styles";
 import { IMyfirebaseListUIProps } from "./attackBoardList.types";
 
@@ -22,6 +23,7 @@ export default function MyfirebaseListUI(props: IMyfirebaseListUIProps) {
         <S.PencilIcon src="/images/board/list/write.png" />
         게시물 등록하기
       </S.Button>
+      <KakaoMapPage />
     </S.Wrapper>
   );
 }

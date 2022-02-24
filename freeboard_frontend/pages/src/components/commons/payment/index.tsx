@@ -77,15 +77,10 @@ export default function PaymentPage() {
         //m_redirect_url: ,  << 모바일 웹에서 결제 후 돌아갈 주소
       },
       (rsp) => {
-        // callback
         if (rsp.success) {
-          // 결제 성공 시 로직,
-          // 포인트 충전시 이 곳에서 BE로 정보를 넘겨주는 로직을 작성해야함 ( imp_uid , paid_amount ) 즉, Mutation 실행 (createPointTransactionOfLoading)
-          // console.log("ㅁㄴㅇ", rsp);
           chargePoint(rsp);
         } else {
           console.log("fail");
-          // 결제 실패 시 로직,
         }
       }
     );

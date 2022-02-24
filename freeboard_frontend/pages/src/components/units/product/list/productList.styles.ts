@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { BsSearch } from "react-icons/bs";
+import ProductListHoverPage from "./protductList.hover";
 
 export const Wrapper = styled.div`
   width: 100%;

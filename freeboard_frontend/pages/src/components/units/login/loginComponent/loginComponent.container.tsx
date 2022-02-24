@@ -67,7 +67,6 @@ export default function LoginComponentPage() {
       if (setAccessToken) setAccessToken(accessToken);
       if (setUserInfo) setUserInfo(userInfo);
 
-      localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("userInfo", JSON.stringify(userInfo));
       router.push(`/boards`);
     } catch (error) {

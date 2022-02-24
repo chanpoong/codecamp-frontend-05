@@ -15,7 +15,7 @@ export const WrapperTitle = styled.span`
 `;
 export const InnerWrapper = styled.div`
   width: calc(100vw - 316px);
-  height: 95%;
+  height: 97%;
 
   display: flex;
   flex-direction: column;
