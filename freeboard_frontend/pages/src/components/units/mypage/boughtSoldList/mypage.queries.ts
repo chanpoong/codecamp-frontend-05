@@ -46,12 +46,13 @@ export const FETCH_USED_ITEMS_I_SOLD = gql`
   }
 `;
 
+//판매 완료된 아이템
 export const FETCH_USED_ITEMS_COUNT_I_SOLD = gql`
   query fetchUseditemsCountISold {
     fetchUseditemsCountISold
   }
 `;
-
+//판매 완료된 아이템 ?
 export const FETCH_POINT_TRANSACTIONS_COUNT_OF_SELLING = gql`
   query fetchPointTransactionsCountOfSelling {
     fetchPointTransactionsCountOfSelling

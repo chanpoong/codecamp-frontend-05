@@ -62,7 +62,7 @@ export default function LayoutHeader() {
   const [logoutUser] = useMutation(LOGOUT_USER);
   const { setAccessToken } = useContext(GlobalContext);
 
-  const { data } =
+  const { data, refetch } =
     useQuery<Pick<IQuery, "fetchUserLoggedIn">>(FETCH_USER_LOGGED_IN);
 
   const onClickToLogin = () => {
@@ -87,6 +87,7 @@ export default function LayoutHeader() {
   // };
   const onClickLogOut = () => {
     logoutUser();
+
     window.location.replace("/");
   };
 

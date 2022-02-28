@@ -6,6 +6,7 @@ import {
   IMutation,
   IMutationUploadFileArgs,
 } from "../../../../src/commons/types/generated/types";
+import { BsJournalCheck } from "react-icons/bs";
 
 export default function ImagesUploadForProduct(props) {
   const fileRef = useRef<HTMLInputElement>(null);
@@ -17,12 +18,6 @@ export default function ImagesUploadForProduct(props) {
   const onClickImage = () => {
     fileRef.current?.click();
   };
-
-  const onChangeFileUrls = (fileUrl: string, index: number) => {
-    const newFileUrls = [...props.images];
-    newFileUrls[index] = fileUrl;
-    props.setImages(newFileUrls);
-  };
   //실제 이미지 업로드 함수
   const onChangeFile = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -31,11 +26,12 @@ export default function ImagesUploadForProduct(props) {
 
     try {
       const result = await uploadFile({ variables: { file } });
-      onChangeFileUrls(result.data?.uploadFile?.url, props.index);
+      props.onChangeFileUrls(result.data?.uploadFile?.url, props.index);
     } catch (error) {
       alert(error.message);
     }
   };
+  console.log(props.images);
 
   return (
     <div>

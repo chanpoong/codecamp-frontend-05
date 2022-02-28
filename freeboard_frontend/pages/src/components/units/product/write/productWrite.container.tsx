@@ -1,12 +1,10 @@
 import { useMutation } from "@apollo/client";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { GlobalContext } from "../../../../../_app";
 import { CREATE_USED_ITEM, UPDATE_USED_ITEM } from "./productWrite.queries";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from "next/router";
-import * as JH from "./productWrite.styles";
 import ProductWritePageUI from "./productWrite.presenter";
 import { IRegister, IVariables, IFormValues } from "./productWrite.types";
 import { Modal } from "antd";
@@ -18,7 +16,7 @@ const schema = yup.object().shape({
     .required("이름은 필수 입력 사항입니다."),
   price: yup
     .number()
-    .moreThan(100, "100원 이상의 값을 입력해주세요")
+    .moreThan(99, "100원 이상의 값을 입력해주세요")
     .required("가격은 필수 입력 사항입니다."),
   contents: yup
     .string()
@@ -41,18 +39,23 @@ export default function ProductWritePage(props) {
   const [updateUseditem] = useMutation(UPDATE_USED_ITEM);
 
   const submitProduct = async (input: IRegister) => {
-    const result = await createUseditem({
-      variables: {
-        createUseditemInput: {
-          name: input.name, //상품명
-          remarks: input.remarks, //한줄 요약
-          contents: input.contents, //내용
-          price: Number(input.price), //가격
-          images,
+    try {
+      const result = await createUseditem({
+        variables: {
+          createUseditemInput: {
+            name: input.name, //상품명
+            remarks: input.remarks, //한줄 요약
+            contents: input.contents, //내용
+            price: Number(input.price), //가격
+            images,
+          },
         },
-      },
-    });
-    router.push("/products");
+      });
+      Modal.success({ content: `게시글 작성을 완료했습니다.` });
+      router.push("/products");
+    } catch (error) {
+      Modal.error({ content: `${error.message}` });
+    }
   };
   const EditProduct = async (input: IRegister) => {
     try {
@@ -80,9 +83,15 @@ export default function ProductWritePage(props) {
     }
   };
 
+  const onChangeFileUrls = (fileUrl: string, index: number) => {
+    const newFileUrls = [...images];
+    newFileUrls[index] = fileUrl;
+    setImages(newFileUrls);
+  };
+
   useEffect(() => {
-    if (props.data?.fetchUseditems?.images?.length) {
-      setImages([props.data?.fetchUseditems?.images]);
+    if (props.isEdit) {
+      setImages(props.data?.fetchUseditems?.images);
     }
     setValue("name", props.data?.fetchUseditem.name);
     setValue("remarks", props.data?.fetchUseditem.remarks);
@@ -98,9 +107,9 @@ export default function ProductWritePage(props) {
       submitProduct={submitProduct}
       register={register}
       formState={formState}
-      EditProduct={EditProduct}
-      setImages={setImages}
       images={images}
+      EditProduct={EditProduct}
+      onChangeFileUrls={onChangeFileUrls}
     />
   );
 }

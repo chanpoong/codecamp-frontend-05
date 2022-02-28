@@ -1,11 +1,10 @@
 import { useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
-import { useContext, useState } from "react";
-import * as JH from "./productCommentQuestion.styles";
-import ButtonForProduct from "../../../../../commons/button/buttonForProduct/buttonForProduct";
+import { useState } from "react";
 
 import { CREATE_USED_ITEM_QUESTION } from "./productCommentQuestion.queries";
 import { Modal } from "antd";
+import ProductCommentQuestionPageUI from "./productCommentQuestion.presenter";
 
 export default function ProductCommentQuestionPage(props) {
   const [contents, setContents] = useState("");
@@ -18,6 +17,10 @@ export default function ProductCommentQuestionPage(props) {
   };
 
   const onClickSubmitComment = async () => {
+    if (!contents) {
+      Modal.error({ content: `내용을 입력해주세요` });
+      return;
+    }
     await createUseditemQuestion({
       variables: {
         createUseditemQuestionInput: {
@@ -30,12 +33,9 @@ export default function ProductCommentQuestionPage(props) {
     Modal.success({ content: `댓글을 등록했습니다.` });
   };
   return (
-    <JH.CommentWrapper>
-      <JH.CommentContentInput
-        type="textArea"
-        onChange={onChangeCommentContents}
-      />
-      <ButtonForProduct name="댓글 등록" onClick={onClickSubmitComment} />
-    </JH.CommentWrapper>
+    <ProductCommentQuestionPageUI
+      onChangeCommentContents={onChangeCommentContents}
+      onClickSubmitComment={onClickSubmitComment}
+    />
   );
 }

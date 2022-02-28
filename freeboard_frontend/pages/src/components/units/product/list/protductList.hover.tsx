@@ -20,7 +20,7 @@ export default function ProductListHoverPage(props) {
     <div>
       <Card hoverable style={{ width: 240 }} cover={aaa}>
         <Meta title={props.el.name} />
-        {props.el.contents}
+        <div style={{ overflow: "hidden" }}>{props.el.contents}</div>
       </Card>
     </div>
   );

@@ -54,7 +54,6 @@ export default function ProductListPageUI(props) {
                 title="preview"
                 key={index}
               >
-                {console.log(el.images)}
                 <JH.ContentsLine
                   key={index}
                   id={el._id}

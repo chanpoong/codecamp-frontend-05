@@ -3,12 +3,20 @@ import styled from "@emotion/styled";
 export const Wrapper = styled.div`
   width: 100%;
   height: 100%;
-  top: 317px;
-  left: 360px;
-  bottom: 350px;
 
-  padding: 50px;
+  padding: 30px;
 
+  background: #ffffff;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+`;
+export const InnerWrapper = styled.div`
+  width: calc(100vw - 316px);
+  height: 97%;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+
+  /* height: 3805px; */
   background: #ffffff;
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
 `;
@@ -23,23 +31,24 @@ export const Title = styled.div`
 
   color: #000000;
 `;
-
-export const ErrorMessage = styled.div`
-  color: red;
+export const SubInput = styled.div`
+  display: flex;
+  flex-direction: row;
 `;
 
 export const BoxTitle = styled.div`
-  width: 100%;
-
-  margin-top: 15px;
-  margin-bottom: 10px;
-
+  width: 70px;
+  /* margin-top: 15px;
+  margin-bottom: 10px; */
+  margin: auto 10px;
+  padding: 10px 0;
   font-family: Noto Sans CJK KR;
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
-  line-height: 24px;
+  /* line-height: 24px; */
   /* identical to box height */
+  text-align: center;
 
   /* Black */
 
@@ -74,4 +83,22 @@ export const BigInputBox = styled.textarea`
   font-weight: normal;
   font-size: 16px;
   line-height: 24px;
+`;
+export const ImageUploadWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+`;
+export const ImageUploadButton = styled.button`
+  border: none;
+  cursor: pointer;
+  :hover {
+    background-color: gold;
+  }
+`;
+
+export const ErrorMessage = styled.div`
+  height: auto;
+  color: red;
+  line-height: 30px;
 `;

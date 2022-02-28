@@ -1,19 +1,13 @@
 import { useMutation, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
-import { DateToString } from "../../../../../commons/libraries/utils";
 import {
   FETCH_USED_ITEM_QUESTIONS,
   DELETE_USED_ITEM_QUESTION,
 } from "./productCommentList.queries";
 import _ from "lodash";
-import InfiniteScroll from "react-infinite-scroller";
-import * as JH from "./productCommentList.styles";
-import ProductCommentQuestionPage from "../productCommentQuestion/productCommentQuestion.container";
 import { Modal } from "antd";
-import { useContext, useEffect, useState } from "react";
-import { GlobalContext } from "../../../../../../_app";
-import ProductCommentEditPage from "../productCommentQuestionEdit/productCommentEdit.container";
-import ProductCommentAnswerPage from "../productCommentAnswer/productCommentAnswer.container";
+import { useState } from "react";
+import ProductCommentListUI from "./productCommentList.presenter";
 
 export default function ProductCommentList() {
   const router = useRouter();
@@ -27,13 +21,17 @@ export default function ProductCommentList() {
   );
 
   const onClickDeleteQuestion = async (e) => {
-    await deleteUseditemQuestion({
-      variables: {
-        useditemQuestionId: String(e.target.id),
-      },
-    });
-    Modal.success({ content: `댓글을 삭제했습니다.` });
-    refetch();
+    try {
+      await deleteUseditemQuestion({
+        variables: {
+          useditemQuestionId: String(e.target.id),
+        },
+      });
+      Modal.success({ content: `댓글을 삭제했습니다.` });
+      refetch();
+    } catch (error) {
+      Modal.error({ content: `${error.message}` });
+    }
   };
 
   const onLoadMore = () => {
@@ -55,11 +53,6 @@ export default function ProductCommentList() {
       },
     });
   };
-  // useEffect(() => {
-  //   setOpenAnswerModal(
-  //     new Array(data?.fetchUseditemQuestions?.length ?? 0).fill(false)
-  //   );
-  // }, [data]);
 
   const onClickOpenAnswer = (index) => {
     const newArr = [...openAnswerModal];
@@ -74,49 +67,14 @@ export default function ProductCommentList() {
   };
 
   return (
-    <JH.Wrapper>
-      <ProductCommentQuestionPage refetch={refetch} />
-      <InfiniteScroll
-        pageStart={0}
-        loadMore={onLoadMore}
-        hasMore={false || true}
-      >
-        {data?.fetchUseditemQuestions.map((el, index) => (
-          <JH.CommentWrapper key={index}>
-            <JH.CommentTitleWrapper>
-              <JH.CommentWriter>{el.user.name}</JH.CommentWriter>
-              <JH.CommentButtonWrapper>
-                <JH.CommentButton onClick={onClickOpenAnswer} id={index}>
-                  대댓글
-                </JH.CommentButton>
-                {onClickOpenAnswer && (
-                  <Modal
-                    title={"QnA" + index}
-                    visible={openAnswerModal[index]}
-                    onOk={onClickCancelModal}
-                    onCancel={onClickCancelModal(index)}
-                  >
-                    <ProductCommentAnswerPage id={el._id} />
-                  </Modal>
-                )}
-
-                <ProductCommentEditPage
-                  id={el._id}
-                  defaultValue={el.contents}
-                />
-                <JH.CommentButton onClick={onClickDeleteQuestion} id={el._id}>
-                  댓글 삭제
-                </JH.CommentButton>
-              </JH.CommentButtonWrapper>
-            </JH.CommentTitleWrapper>
-
-            <JH.CommentContents>{el.contents}</JH.CommentContents>
-            <JH.CommentCreatedAt>
-              {DateToString(el.createdAt)}
-            </JH.CommentCreatedAt>
-          </JH.CommentWrapper>
-        ))}
-      </InfiniteScroll>
-    </JH.Wrapper>
+    <ProductCommentListUI
+      data={data}
+      refetch={refetch}
+      onLoadMore={onLoadMore}
+      onClickOpenAnswer={onClickOpenAnswer}
+      openAnswerModal={openAnswerModal}
+      onClickCancelModal={onClickCancelModal}
+      onClickDeleteQuestion={onClickDeleteQuestion}
+    />
   );
 }

@@ -13,13 +13,11 @@ export default function ProductDetailPageUI(props) {
       <JH.InnerWrapper>
         <JH.TitleWrapper>
           <JH.Title>상품명:</JH.Title>
-          <JH.TitleData>{props.data?.fetchUseditem.remarks}</JH.TitleData>
-          <span>서버</span>
-          <span>{server}</span>
+          <JH.TitleData>{props.data?.fetchUseditem.name}</JH.TitleData>
         </JH.TitleWrapper>
         <JH.ProductInfoWrapper>
-          <JH.Seller>판매자:</JH.Seller>
-          <JH.SellerData>{props.data?.fetchUseditem.name}</JH.SellerData>
+          <JH.Seller>한줄평:</JH.Seller>
+          <JH.SellerData>{props.data?.fetchUseditem.remarks}</JH.SellerData>
 
           <JH.Seller>가격:</JH.Seller>
           <JH.SellerData>{props.data?.fetchUseditem.price}</JH.SellerData>
@@ -43,6 +41,10 @@ export default function ProductDetailPageUI(props) {
           <ButtonForProduct
             onClick={props.buyProduct}
             name="구매하기"
+          ></ButtonForProduct>
+          <ButtonForProduct
+            onClick={props.pickProduct}
+            name="찜하기"
           ></ButtonForProduct>
           <ButtonForProduct
             onClick={props.moveToPage(`/products`)}

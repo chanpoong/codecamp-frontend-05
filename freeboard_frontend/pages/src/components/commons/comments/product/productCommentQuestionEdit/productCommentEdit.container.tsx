@@ -2,6 +2,7 @@ import { useMutation } from "@apollo/client";
 import { Modal } from "antd";
 import { useContext, useState } from "react";
 import { GlobalContext } from "../../../../../../_app";
+import ProductCommentEditPageUI from "./productCommentEdit.presenter";
 import { UPDATE_USED_ITEM_QUESTION } from "./productCommentEdit.queries";
 
 export default function ProductCommentEditPage(props) {
@@ -12,6 +13,10 @@ export default function ProductCommentEditPage(props) {
 
   const onClickUpdateQuestion = async (e) => {
     setIsEdit(true);
+    if (updateComment.length === 0) {
+      Modal.error({ content: `내용을 입력해주세요` });
+      return;
+    }
     try {
       await updateUseditemQuestion({
         variables: {
@@ -38,24 +43,12 @@ export default function ProductCommentEditPage(props) {
   };
 
   return (
-    <div>
-      <button onClick={onClickOpenUpdate}>댓글 수정</button>
-      {onClickOpenUpdate && (
-        <Modal
-          title={"댓글 수정"}
-          visible={openUpdateModal}
-          onOk={onClickUpdateQuestion}
-          onCancel={onClickModalCancel}
-        >
-          내용:
-          <input
-            type="textarea"
-            onChange={onChangeEditComment}
-            maxLength={100}
-            defaultValue={props.defaultValue}
-          />
-        </Modal>
-      )}
-    </div>
+    <ProductCommentEditPageUI
+      onClickOpenUpdate={onClickOpenUpdate}
+      openUpdateModal={openUpdateModal}
+      onClickUpdateQuestion={onClickUpdateQuestion}
+      onClickModalCancel={onClickModalCancel}
+      onChangeEditComment={onChangeEditComment}
+    />
   );
 }

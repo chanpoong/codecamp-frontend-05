@@ -7,6 +7,7 @@ import {
   IQuery,
 } from "../../../../../src/commons/types/generated/types";
 import { Modal } from "antd";
+import { useRouter } from "next/router";
 
 const CREATE_POINT_TRANSACTION_OF_LOADING = gql`
   mutation createPointTransactionOfLoading($impUid: ID!) {
@@ -33,6 +34,7 @@ const FETCH_USER_LOGGED_IN = gql`
 `;
 export default function PaymentPage() {
   const [amount, setAmount] = useState(0);
+  const router = useRouter();
   const [createPointTransactionOfLoading] = useMutation<
     Pick<IMutation, "createPointTransactionOfLoading">,
     IMutationCreatePointTransactionOfLoadingArgs
@@ -53,6 +55,7 @@ export default function PaymentPage() {
       });
       refetch();
       Modal.success({ content: `포인트 충전이 완료되었습니다.` });
+      router.push("mypage");
     } catch (error) {
       Modal.error({ content: `${error.message}` });
     }

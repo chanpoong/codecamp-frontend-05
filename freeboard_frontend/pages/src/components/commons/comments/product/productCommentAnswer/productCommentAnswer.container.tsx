@@ -1,7 +1,8 @@
 import { useMutation, useQuery } from "@apollo/client";
 import { Modal } from "antd";
 import { useState } from "react";
-import { DateToString } from "../../../../../commons/libraries/utils";
+
+import ProductCommentAnswerPageUI from "./productCommentAnswer.presenter";
 import {
   CREATE_USED_ITEM_QUESTION_ANSWER,
   DELETE_USED_ITEM_QUESTION_ANSWER,
@@ -84,36 +85,16 @@ export default function ProductCommentAnswerPage(props) {
   };
 
   return (
-    <div>
-      <div>
-        <input type="text" onChange={onChangeContents} />
-        <button onClick={createAnswer}> 등록 </button>
-      </div>
-      {data?.fetchUseditemQuestionAnswers?.map((el) => (
-        <div key={props.id}>
-          <div>{el.user.name}</div>
-          {isEdit && commentId === el._id ? (
-            <input defaultValue={el.contents} onChange={onChangeEditContents} />
-          ) : (
-            <div>{el.contents}</div>
-          )}
-
-          <div>{DateToString(el.createdAt)}</div>
-          {isEdit && commentId === el._id ? (
-            <button id={el._id} onClick={EditAnswer}>
-              완료
-            </button>
-          ) : (
-            <button id={el._id} onClick={onChangeToEdit}>
-              수정
-            </button>
-          )}
-
-          <button id={el._id} onClick={deleteAnswer}>
-            삭제
-          </button>
-        </div>
-      ))}
-    </div>
+    <ProductCommentAnswerPageUI
+      data={data}
+      onChangeContents={onChangeContents}
+      createAnswer={createAnswer}
+      isEdit={isEdit}
+      commentId={commentId}
+      onChangeEditContents={onChangeEditContents}
+      EditAnswer={EditAnswer}
+      onChangeToEdit={onChangeToEdit}
+      deleteAnswer={deleteAnswer}
+    />
   );
 }

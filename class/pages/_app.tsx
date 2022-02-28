@@ -128,6 +128,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     link: ApolloLink.from([errorLink, uploadLink as unknown as ApolloLink]),
     //API 참조를 위한 주소는 uri에 작성
     cache: new InMemoryCache(),
+    connectToDevTools: true
   }); //
 
   return (

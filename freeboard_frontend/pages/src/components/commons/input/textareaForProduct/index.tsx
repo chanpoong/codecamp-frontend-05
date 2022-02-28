@@ -1,14 +1,13 @@
 import styled from "@emotion/styled";
 
-const ForProduct = styled.input`
-  width: auto;
-  border: none;
-  border-bottom: 1px solid gray;
-
+const ForProduct = styled.textarea`
+  width: 100%;
+  height: auto;
+  min-height: 400px;
   padding: 5px;
 `;
 
-export default function InputForProduct(props) {
+export default function TextareaForProduct(props) {
   return (
     <ForProduct
       type={props.type}
