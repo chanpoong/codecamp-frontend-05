@@ -9,6 +9,7 @@ import {
 import { BsJournalCheck } from "react-icons/bs";
 
 export default function ImagesUploadForProduct(props) {
+  console.log(props.images);
   const fileRef = useRef<HTMLInputElement>(null);
   const [uploadFile] = useMutation<
     Pick<IMutation, "uploadFile">,
@@ -31,7 +32,6 @@ export default function ImagesUploadForProduct(props) {
       alert(error.message);
     }
   };
-  console.log(props.images);
 
   return (
     <div>

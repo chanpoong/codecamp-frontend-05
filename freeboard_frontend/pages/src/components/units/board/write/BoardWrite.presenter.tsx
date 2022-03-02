@@ -50,6 +50,7 @@ export default function BoardWriteUI(props) {
           placeholder="내용을 작성해주세요"
           defaultValue={props.isEdit ? props.data?.fetchBoard.contents : ""}
         ></JH.InputOne>
+
         <JH.ErrorMassages> {props.txtError} </JH.ErrorMassages>
       </JH.TextBox2>
       <JH.TextBox2>

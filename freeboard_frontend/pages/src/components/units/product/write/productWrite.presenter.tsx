@@ -5,7 +5,6 @@ import ImagesUploadForProduct from "../../../../commons/imageUploadForProduct/im
 import TextareaForProduct from "../../../commons/input/textareaForProduct";
 
 export default function ProductWritePageUI(props) {
-  console.log(props.images);
   return (
     <JH.Wrapper>
       <JH.Title>게시물 {props.isEdit ? "수정" : "등록"}</JH.Title>
@@ -57,31 +56,20 @@ export default function ProductWritePageUI(props) {
               props.isEdit ? props.data?.fetchUseditem.contents : ""
             }
           />
-
           <JH.ErrorMessage>
             {props.formState.errors?.contents?.message}
           </JH.ErrorMessage>
 
           <JH.ImageUploadWrapper>
-            {props.isEdit
-              ? props.data?.fetchUseditem.images.map((el, index) => (
-                  <ImagesUploadForProduct
-                    data={props.data}
-                    images={el}
-                    index={index}
-                    key={uuidv4}
-                    onChangeFileUrls={props.onChangeFileUrls}
-                  />
-                ))
-              : props.images?.map((el, index) => (
-                  <ImagesUploadForProduct
-                    data={props.data}
-                    images={el}
-                    index={index}
-                    key={uuidv4}
-                    onChangeFileUrls={props.onChangeFileUrls}
-                  />
-                ))}
+            {props.images?.map((el, index) => (
+              <ImagesUploadForProduct
+                data={props.data}
+                images={el}
+                index={index}
+                key={uuidv4}
+                onChangeFileUrls={props.onChangeFileUrls}
+              />
+            ))}
           </JH.ImageUploadWrapper>
           <button>등록</button>
         </JH.InnerWrapper>

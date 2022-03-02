@@ -28,12 +28,14 @@ const schema = yup.object().shape({
 export default function ProductWritePage(props) {
   const router = useRouter();
   const [images, setImages] = useState(["", "", ""]);
+  // const [contents, setContents] = useState("");
 
-  const { register, handleSubmit, formState, setValue } = useForm<IFormValues>({
-    mode: "onChange",
-    resolver: yupResolver(schema),
-    defaultValues: {},
-  });
+  const { register, handleSubmit, formState, setValue, trigger } =
+    useForm<IFormValues>({
+      mode: "onChange",
+      resolver: yupResolver(schema),
+      defaultValues: {},
+    });
 
   const [createUseditem] = useMutation(CREATE_USED_ITEM);
   const [updateUseditem] = useMutation(UPDATE_USED_ITEM);
@@ -91,8 +93,9 @@ export default function ProductWritePage(props) {
 
   useEffect(() => {
     if (props.isEdit) {
-      setImages(props.data?.fetchUseditems?.images);
+      setImages(props.data?.fetchUseditem?.images);
     }
+
     setValue("name", props.data?.fetchUseditem.name);
     setValue("remarks", props.data?.fetchUseditem.remarks);
     setValue("contents", props.data?.fetchUseditem.contents);
