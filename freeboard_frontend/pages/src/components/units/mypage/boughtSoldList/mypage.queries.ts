@@ -52,9 +52,16 @@ export const FETCH_USED_ITEMS_COUNT_I_SOLD = gql`
     fetchUseditemsCountISold
   }
 `;
-//판매 완료된 아이템 ?
+//판매 완료된 아이템의 포인트 적립 내역 개수
 export const FETCH_POINT_TRANSACTIONS_COUNT_OF_SELLING = gql`
   query fetchPointTransactionsCountOfSelling {
     fetchPointTransactionsCountOfSelling
+  }
+`;
+
+//구매 완료한 아이템의 포인트 사용 개수
+export const FETCH_POINT_TRANSACTIONS_COUNT_OF_BUYING = gql`
+  query fetchPointTransactionsCountOfBuying {
+    fetchPointTransactionsCountOfBuying
   }
 `;

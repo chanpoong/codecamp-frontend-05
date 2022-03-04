@@ -1,20 +1,23 @@
 import { useMutation, useQuery } from "@apollo/client";
-import { FETCH_USED_ITEMS_I_PICKED } from "./productIPicked.queries";
+import {
+  FETCH_USED_ITEMS_I_PICKED,
+  TOGGLE_USED_ITEM_PICK,
+  FETCH_USED_ITEMS_COUNT_I_PICKED,
+} from "./productIPicked.queries";
 import { v4 as uuidv4 } from "uuid";
 import { getMyDate } from "../../../../commons/libraries/utils";
-import { gql } from "@apollo/client";
-import { Modal } from "antd";
 
-export const TOGGLE_USED_ITEM_PICK = gql`
-  mutation toggleUseditemPick($useditemId: ID!) {
-    toggleUseditemPick(useditemId: $useditemId)
-  }
-`;
+import { Modal } from "antd";
+import { Pagination } from "antd";
 
 export default function ProductIPickedPage() {
   const { data, refetch } = useQuery(FETCH_USED_ITEMS_I_PICKED, {
     variables: { page: 1, search: "" },
   });
+  const { data: CountOfIPicked, refetch: RefetchCountIPicked } = useQuery(
+    FETCH_USED_ITEMS_COUNT_I_PICKED
+  );
+
   const [toggleUseditemPick] = useMutation(TOGGLE_USED_ITEM_PICK);
 
   const pickProduct = async (e) => {
@@ -29,6 +32,11 @@ export default function ProductIPickedPage() {
     } catch (error) {
       Modal.error({ content: `${error.message}` });
     }
+  };
+  const onChangeOtherPage = (page) => {
+    refetch({
+      page,
+    });
   };
 
   return (
@@ -65,6 +73,11 @@ export default function ProductIPickedPage() {
             </div>
           )
         )}
+        <Pagination
+          defaultCurrent={1}
+          total={CountOfIPicked?.fetchUseditemsCountIPicked}
+          onChange={onChangeOtherPage}
+        />
       </div>
     </div>
   );

@@ -23,7 +23,8 @@ export default function MyPage() {
   const { data: ProductCountISold } = useQuery(FETCH_USED_ITEMS_COUNT_I_SOLD); // 판매 완료된 상품 조회
   const { data: CountOfSelling } = useQuery(
     FETCH_POINT_TRANSACTIONS_COUNT_OF_SELLING
-  ); // 판매완료 상품 ?
+  ); // 판매완료 상품의 개수(포인트 적립 횟수)
+
   const router = useRouter();
 
   const [showList, setShowList] = useState(false);

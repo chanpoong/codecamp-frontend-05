@@ -2,6 +2,7 @@ import * as JH from "./mypage.styles";
 import InfiniteScroll from "react-infinite-scroller";
 import { getMyDate } from "../../../../commons/libraries/utils";
 import { Menu } from "antd";
+import { Pagination } from "antd";
 
 export default function MyPageUI(props) {
   // state = {
@@ -24,9 +25,6 @@ export default function MyPageUI(props) {
       </JH.Sidebar>
       <JH.MypageWrapper>
         <div>
-          {/* <Menu mode="horizontal">
-            <Menu.Item key="mail">구매/판매 내역</Menu.Item>
-          </Menu> */}
           <JH.Title>
             마이 페이지
             <div>
@@ -81,6 +79,12 @@ export default function MyPageUI(props) {
                     )}
                   </JH.ItemBoxInfo>
                 ))}
+                {/* <Pagination
+                defaultCurrent={1}
+                total={
+                  props.CountOfSelling.fetchPointTransactionsCountOfSelling
+                } */}
+                {/* /> */}
               </JH.SoldListWrapper>
             )}
           </InfiniteScroll>
