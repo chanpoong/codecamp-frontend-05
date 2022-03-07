@@ -1,12 +1,15 @@
 import { useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
-import { ChangeEvent, MouseEvent, useState } from "react";
+import { ChangeEvent, MouseEvent, useContext, useState } from "react";
 import _ from "lodash";
 import ProductListPageUI from "./productList.presenter";
 import { FETCH_USED_ITEMS } from "./productList.queries";
+import { getMyDate2 } from "../../../../commons/libraries/utils";
+import { GlobalContext } from "../../../../../_app";
 
 export default function ProductListPage() {
   const router = useRouter();
+  const { setItem } = useContext(GlobalContext);
   const [keyword, setKeyword] = useState("");
   const { data, fetchMore, refetch } = useQuery(FETCH_USED_ITEMS, {
     variables: { page: 1, search: keyword },
@@ -16,9 +19,35 @@ export default function ProductListPage() {
   const SubmitProduct = () => {
     router.push("/products/new");
   };
-  const onClickToProductDetail = (event: MouseEvent<HTMLDivElement>) => {
-    router.push(`/products/${event.currentTarget.id}`);
+
+  const todayDate = getMyDate2(new Date());
+
+  // const onClickToProductDetail = (el) => () => {
+  //   const baskets = JSON.parse(localStorage.getItem(todayDate) || "[]");
+  //   const temp = baskets.filter((filterEl) => filterEl._id === el._id);
+  //   if (temp.length === 1) {
+  //     return;
+  //   }
+
+  //   const { __typename, ...plus } = el;
+  //   baskets.unshift(plus);
+  //   localStorage.setItem(todayDate, JSON.stringify(baskets));
+
+  //   setItem(baskets);
+
+  //   router.push(`/products/${el._id}`);
+  // };
+  const onClickToProductDetail = (el) => () => {
+    const baskets = JSON.parse(localStorage.getItem(todayDate) || "[]");
+    const temp = baskets.filter((filterEl) => filterEl._id !== el._id);
+
+    const { __typename, ...plus } = el;
+    temp.unshift(plus);
+    localStorage.setItem(todayDate, JSON.stringify(temp));
+    setItem(temp);
+    router.push(`/products/${el._id}`);
   };
+
   const onClickOpenSearchBar = () => {
     setOpenSearchBar((prev) => !prev);
   };

@@ -5,10 +5,19 @@ import {
   FETCH_POINT_TRANSACTIONS_COUNT_OF_LOADING,
   FETCH_POINT_TRANSACTIONS_COUNT_OF_SELLING,
 } from "./paymentList.queries";
-import { v4 as uuidv4 } from "uuid";
+
+import PaymentListPageUI from "./paymentList.presenter";
+import {
+  IQuery,
+  IQueryFetchPointTransactionsArgs,
+} from "../../../../../../src/commons/types/generated/types";
 
 export default function PaymentListPage() {
-  const { data } = useQuery(FETCH_POINT_TRANSACTIONS);
+  const { data, fetchMore } = useQuery<
+    Pick<IQuery, "fetchPointTransactions">,
+    IQueryFetchPointTransactionsArgs
+  >(FETCH_POINT_TRANSACTIONS);
+
   const { data: CountOfBuying } = useQuery(
     FETCH_POINT_TRANSACTIONS_COUNT_OF_BUYING
   );
@@ -18,24 +27,30 @@ export default function PaymentListPage() {
   const { data: CountOfSelling } = useQuery(
     FETCH_POINT_TRANSACTIONS_COUNT_OF_SELLING
   );
+  const onLoadMorePointTransactions = async () => {
+    if (!data) return;
+    await fetchMore({
+      variables: {
+        page: Math.ceil(data?.fetchPointTransactions.length / 10) + 1,
+      },
 
-  // const PagesOfTransactions =
-  //   CountOfBuying.fetchPointTransactionsCountOfBuying +
-  //   CountOfLoading.fetchPointTransactionsCountOfLoading +
-  //   CountOfSelling.fetchPointTransactionsCountOfSelling;
+      updateQuery: (prev, { fetchMoreResult }) => {
+        if (!fetchMoreResult.fetchPointTransactions)
+          return { fetchPointTransactions: [...prev.fetchPointTransactions] };
+        return {
+          fetchPointTransactions: [
+            ...prev.fetchPointTransactions,
+            ...fetchMoreResult.fetchPointTransactions,
+          ],
+        };
+      },
+    });
+  };
 
   return (
-    <div>
-      <h1> 포인트 사용 내역</h1>
-      {data?.fetchPointTransactions.map((el) => (
-        <div key={uuidv4}>
-          <div>사용 금액{el.amount}</div>
-          <div>현재 포인트{el.balance}</div>
-          <div>내역 {el.status}</div>
-          <div>사용일 {el.createdAt}</div>
-          <br />
-        </div>
-      ))}
-    </div>
+    <PaymentListPageUI
+      data={data}
+      onLoadMorePointTransactions={onLoadMorePointTransactions}
+    />
   );
 }

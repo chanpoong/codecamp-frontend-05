@@ -48,6 +48,8 @@ interface IGlobalContext {
   setIsEdit?: Dispatch<SetStateAction<boolean>>;
   server?: string;
   setServer?: Dispatch<SetStateAction<string>>;
+  item?: any;
+  setItem?: any;
   onChangeSelectServer?: () => void;
 }
 
@@ -58,6 +60,7 @@ function MyApp({ Component, pageProps }) {
   const [userInfo, setUserInfo] = useState<IUserInfo>({});
   const [isEdit, setIsEdit] = useState(false);
   const [server, setServer] = useState("");
+  const [item, setItem] = useState([]);
 
   useEffect(() => {
     getAccessToken().then((newAccessToken) => {
@@ -117,6 +120,8 @@ function MyApp({ Component, pageProps }) {
     onChangeSelectServer,
     server,
     setServer,
+    item,
+    setItem,
   };
 
   return (

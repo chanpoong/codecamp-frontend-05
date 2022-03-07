@@ -6,12 +6,14 @@ import InfiniteScroll from "react-infinite-scroller";
 import { v4 as uuidv4 } from "uuid";
 import { DateToString } from "../../../../commons/libraries/utils";
 import ProductListHoverPage from "./protductList.hover";
+import LookedProductPage from "../../../commons/lookedProduct";
 
 export default function ProductListPageUI(props) {
   return (
     <JH.Wrapper>
       <JH.WrapperHeader>
         <JH.HeaderTitle>거래 게시판</JH.HeaderTitle>
+        <LookedProductPage />
         <JH.HeaderSearch>
           {props.openSearchBar ? (
             <JH.SearchBarWrapper>
@@ -57,7 +59,7 @@ export default function ProductListPageUI(props) {
                 <JH.ContentsLine
                   key={index}
                   id={el._id}
-                  onClick={props.onClickToProductDetail}
+                  onClick={props.onClickToProductDetail(el)}
                 >
                   <JH.itemText>{`${index + 1}`}</JH.itemText>
 
