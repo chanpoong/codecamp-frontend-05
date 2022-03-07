@@ -12,7 +12,7 @@ export default function BoardDetailPage(props) {
         <meta property="og:image" content={props.boardData?.images[0]} />
       </Head>
       <div>
-        <h1>BoardDetailPage, 게시글 아이디는 {router.query.boardId}입니다</h1>
+        <h1>BoardDetailPage, 게시글 아이디는 {router.query.id}입니다</h1>
       </div>
     </div>
   );
@@ -37,7 +37,7 @@ export const getServerSideProps = async (context) => {
   const result = await request(
     "https://backend05.codebootcamp.co.kr/graphql", // 데이터를 요청할 BE서버 주소
     FETCH_BOARD, // 사용할 쿼리
-    { boardId: context.query.boardId } // boardId를 context로 받아오며 context는 이 함수에서 제공
+    { boardId: context.query.id } // boardId를 context로 받아오며 context는 이 함수에서 제공
   );
 
   return {
