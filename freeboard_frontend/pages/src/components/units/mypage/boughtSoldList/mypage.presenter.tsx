@@ -1,8 +1,7 @@
 import * as JH from "./mypage.styles";
 import InfiniteScroll from "react-infinite-scroller";
 import { getMyDate } from "../../../../commons/libraries/utils";
-import { Menu } from "antd";
-import { Pagination } from "antd";
+
 
 export default function MyPageUI(props) {
   // state = {
